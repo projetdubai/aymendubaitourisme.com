@@ -9,9 +9,11 @@ import { Badge } from "@/components/ui/Badge";
 import { Link } from "@/i18n/routing";
 import { SERVICE_IMAGES, SITE_CONFIG } from "@/lib/constants";
 import { getWhatsAppUrl } from "@/lib/utils";
+import { readPropertiesAsync } from "@/lib/properties";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 interface RealEstatePageProps {
   params: Promise<{ locale: string }>;
@@ -42,6 +44,8 @@ export async function generateMetadata({
 export default async function RealEstatePage({ params }: RealEstatePageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const properties = await readPropertiesAsync();
 
   const isAr = locale === "ar";
   const isFr = locale === "fr";
@@ -109,7 +113,7 @@ export default async function RealEstatePage({ params }: RealEstatePageProps) {
 
         {/* Real Estate Listings and Interactive Filter Section */}
         <div className="py-8">
-          <RealEstate />
+          <RealEstate initialProperties={properties} locale={locale} />
         </div>
       </main>
       <Footer />

@@ -14,6 +14,7 @@ import { readVisasAsync } from "@/lib/visas";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 interface VisaPageProps {
   params: Promise<{ locale: string }>;

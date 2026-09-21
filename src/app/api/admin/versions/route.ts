@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { readVersionsAsync, createVersionSnapshotAsync } from '@/lib/versions';
 import { revalidateSite } from '@/lib/revalidate';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 export async function GET() {
   try {
@@ -31,6 +33,7 @@ export async function POST(request: Request) {
 
     const version = await createVersionSnapshotAsync(note, author);
     await revalidateSite();
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, version });
   } catch (error) {

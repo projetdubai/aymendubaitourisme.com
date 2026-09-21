@@ -80,12 +80,21 @@ const FALLBACK_REVIEWS: Review[] = [
   },
 ];
 
-export function Reviews() {
+interface ReviewsProps {
+  initialReviews?: Review[];
+}
+
+export function Reviews({ initialReviews }: ReviewsProps = {}) {
   const t = useTranslations('Reviews');
   const locale = useLocale() || 'fr';
   const isArabic = locale === 'ar';
   
-  const [reviews, setReviews] = useState<Review[]>(FALLBACK_REVIEWS);
+  const [reviews, setReviews] = useState<Review[]>(() => {
+    if (initialReviews && initialReviews.length > 0) {
+      return initialReviews;
+    }
+    return FALLBACK_REVIEWS;
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Load approved reviews from API

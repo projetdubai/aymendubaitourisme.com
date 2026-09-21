@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import fs from "fs";
 import path from "path";
 import os from "os";
@@ -6,6 +7,7 @@ import { cloudDb } from "@/lib/cloud-db";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 declare global {
   var __quotes_cache: any[] | undefined;
@@ -45,6 +47,20 @@ async function getQuotes(): Promise<any[]> {
     globalThis.__quotes_cache = cloud;
     return cloud;
   }
+
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import('@/lib/prisma');
+      const dbQuotes = await prisma.quoteRequest.findMany({
+        orderBy: { createdAt: 'desc' },
+      });
+      if (Array.isArray(dbQuotes) && dbQuotes.length > 0) {
+        globalThis.__quotes_cache = dbQuotes;
+        return dbQuotes;
+      }
+    } catch {}
+  }
+
   globalThis.__quotes_cache = disk;
   return disk;
 }
@@ -69,7 +85,7 @@ export async function GET() {
     const quotes = await getQuotes();
     return NextResponse.json({ success: true, quotes });
   } catch (error) {
-    console.error("Error reading quotes:", error);
+    console.error("Error fetching quotes:", error);
     return NextResponse.json(
       { success: false, message: "Erreur de lecture des devis." },
       { status: 500 }
@@ -94,6 +110,18 @@ export async function PATCH(request: NextRequest) {
 
     quotes[index].status = status;
     await saveQuotes(quotes);
+
+    if (process.env.DATABASE_URL) {
+      try {
+        const { prisma } = await import('@/lib/prisma');
+        await prisma.quoteRequest.updateMany({
+          where: { id },
+          data: { status: status as any },
+        });
+      } catch {}
+    }
+
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({
       success: true,
@@ -124,6 +152,15 @@ export async function DELETE(request: NextRequest) {
     const quotes = await getQuotes();
     const filtered = quotes.filter((q: any) => q.id !== id);
     await saveQuotes(filtered);
+
+    if (process.env.DATABASE_URL) {
+      try {
+        const { prisma } = await import('@/lib/prisma');
+        await prisma.quoteRequest.deleteMany({ where: { id } });
+      } catch {}
+    }
+
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({
       success: true,

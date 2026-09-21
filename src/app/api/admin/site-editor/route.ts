@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import fs from "fs";
 import path from "path";
 import os from "os";
@@ -6,6 +7,8 @@ import { cloudDb } from "@/lib/cloud-db";
 import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 const MESSAGES_DIR = path.join(process.cwd(), "src", "messages");
 const CONTENT_FILE = path.join(process.cwd(), "src", "data", "site-content.json");
@@ -103,6 +106,7 @@ export async function POST(request: NextRequest) {
 
     // Invalidate caches so visitors and serverless instances immediately see the updated content
     await revalidateSite();
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({
       success: true,

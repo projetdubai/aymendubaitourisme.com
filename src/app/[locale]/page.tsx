@@ -2,6 +2,9 @@ import { setRequestLocale } from "next-intl/server";
 import fs from "fs/promises";
 import path from "path";
 import { cloudDb } from "@/lib/cloud-db";
+import { readServicesAsync } from "@/lib/services";
+import { readPropertiesAsync } from "@/lib/properties";
+import { getApprovedReviewsAsync } from "@/lib/reviews";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
@@ -19,6 +22,7 @@ import StructuredData from "@/components/seo/StructuredData";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
@@ -47,6 +51,13 @@ export default async function HomePage({ params }: HomePageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
+  // Read dynamic data from Prisma / Supabase Cloud DB
+  const [services, properties, reviews] = await Promise.all([
+    readServicesAsync(),
+    readPropertiesAsync(),
+    getApprovedReviewsAsync(),
+  ]);
+
   let sections: SectionConfig[] = defaultSections;
 
   try {
@@ -73,12 +84,12 @@ export default async function HomePage({ params }: HomePageProps) {
   const renderSection = (id: string) => {
     switch (id) {
       case "hero": return <Hero key="hero" />;
-      case "services": return <Services key="services" />;
+      case "services": return <Services key="services" initialServices={services} locale={locale} />;
       case "extra-services": return <ExtraServices key="extra-services" />;
       case "founder": return <FounderSection key="founder" />;
       case "why-us": return <WhyChooseUs key="why-us" />;
-      case "real-estate": return <RealEstate key="real-estate" />;
-      case "reviews": return <Reviews key="reviews" />;
+      case "real-estate": return <RealEstate key="real-estate" initialProperties={properties} locale={locale} />;
+      case "reviews": return <Reviews key="reviews" initialReviews={reviews} />;
       case "faq": return <FAQSection key="faq" />;
       case "promo": return <PromoSection key="promo" />;
       case "contact": return <Contact key="contact" />;

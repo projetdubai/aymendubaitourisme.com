@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { TourismServiceItem, readServicesAsync, writeServicesAsync, DEFAULT_SERVICES } from "@/lib/services";
 import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 export async function GET() {
   try {
@@ -62,6 +64,7 @@ export async function POST(req: NextRequest) {
     const updated = [newService, ...currentServices.filter((s) => s.id !== newService.id)];
     await writeServicesAsync(updated);
     await revalidateSite('services');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, service: newService, services: updated });
   } catch (error: any) {
@@ -121,6 +124,7 @@ export async function PUT(req: NextRequest) {
 
     await writeServicesAsync(updated);
     await revalidateSite('services');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, service: updatedService, services: updated });
   } catch (error: any) {
@@ -145,10 +149,23 @@ export async function DELETE(req: NextRequest) {
     }
 
     const currentServices = await readServicesAsync();
-    const updated = currentServices.filter((s) => s.id !== id);
+    const updated = currentServices.filter((s) => s.id !== id && s.slug !== id);
 
     await writeServicesAsync(updated);
+
+    if (process.env.DATABASE_URL) {
+      try {
+        const { prisma } = await import('@/lib/prisma');
+        await prisma.service.deleteMany({
+          where: { OR: [{ id }, { slug: id }] },
+        });
+      } catch (err) {
+        console.warn('Could not delete from prisma.service:', err);
+      }
+    }
+
     await revalidateSite('services');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, services: updated });
   } catch (error: any) {

@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { cloudDb } from "@/lib/cloud-db";
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 const contactSchema = z.object({
   name: z.string().min(2),
@@ -43,6 +46,8 @@ export async function POST(request: NextRequest) {
     const currentMessages = (await cloudDb.get<any[]>("contact_messages")) || [];
     const updatedMessages = [newMessage, ...(Array.isArray(currentMessages) ? currentMessages : [])];
     await cloudDb.set("contact_messages", updatedMessages);
+
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json(
       {

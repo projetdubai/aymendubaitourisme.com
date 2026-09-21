@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import fs from "fs";
 import path from "path";
 import { hashPassword } from "@/lib/auth";
@@ -6,6 +7,7 @@ import { cloudDb } from "@/lib/cloud-db";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 const ADMINS_FILE = path.join(process.cwd(), "src", "data", "admins.json");
 
@@ -35,6 +37,7 @@ async function saveAdmins(admins: any[]): Promise<void> {
   try {
     fs.writeFileSync(ADMINS_FILE, JSON.stringify(admins, null, 2), "utf-8");
   } catch {}
+  revalidatePath("/", "layout");
 }
 
 export async function GET() {

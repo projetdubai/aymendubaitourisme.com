@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { FlightItem, readFlightsAsync, writeFlightsAsync, DEFAULT_FLIGHTS } from "@/lib/flights";
 import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 export async function GET() {
   try {
@@ -60,6 +62,7 @@ export async function POST(req: NextRequest) {
     const updated = [newFlight, ...currentFlights.filter((f) => f.id !== newFlight.id)];
     await writeFlightsAsync(updated);
     await revalidateSite('flights');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, flight: newFlight, flights: updated });
   } catch (error: any) {
@@ -114,6 +117,7 @@ export async function PUT(req: NextRequest) {
 
     await writeFlightsAsync(updated);
     await revalidateSite('flights');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, flight: updatedFlight, flights: updated });
   } catch (error: any) {
@@ -142,6 +146,7 @@ export async function DELETE(req: NextRequest) {
 
     await writeFlightsAsync(updated);
     await revalidateSite('flights');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, flights: updated });
   } catch (error: any) {

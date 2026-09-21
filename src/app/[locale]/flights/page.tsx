@@ -15,6 +15,7 @@ import AirlinesBars from "@/components/flights/AirlinesBars";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 interface FlightsPageProps {
   params: Promise<{ locale: string }>;

@@ -173,7 +173,36 @@ export async function readAllReviewsAsync(): Promise<ReviewItem[]> {
     console.warn('[reviews] Cloud DB read error, falling back to disk/tmp:', err);
   }
 
-  // 2. Fall back to local synchronous reader
+  // 2. Direct Prisma table fallback
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import('./prisma');
+      const dbReviews = await prisma.review.findMany({
+        orderBy: { createdAt: 'desc' },
+      });
+      if (Array.isArray(dbReviews) && dbReviews.length > 0) {
+        const mapped: ReviewItem[] = dbReviews.map((r) => ({
+          id: r.id,
+          author_name: r.name,
+          name: r.name,
+          country: r.country,
+          rating: r.rating,
+          service: 'Service Dubaï',
+          comment: r.review,
+          text: r.review,
+          created_at: r.createdAt.toISOString(),
+          date: r.createdAt.toISOString().split('T')[0],
+          status: r.status === 'APPROVED' ? 'approved' : r.status === 'REJECTED' ? 'rejected' : 'pending',
+        }));
+        globalThis.__reviews_cache = mapped;
+        return mapped;
+      }
+    } catch (err) {
+      console.warn('[reviews] prisma.review read error:', err);
+    }
+  }
+
+  // 3. Fall back to local synchronous reader
   return readAllReviews();
 }
 
@@ -213,8 +242,41 @@ export async function saveAllReviewsAsync(reviews: ReviewItem[]): Promise<boolea
     console.error('Error persisting reviews to cloudDb:', err);
   }
 
+  // 4. Also systematically sync using prisma.review.upsert()
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import('./prisma');
+      for (const r of normalized) {
+        const statusEnum = (r.status === 'approved' ? 'APPROVED' : r.status === 'rejected' ? 'REJECTED' : 'PENDING') as any;
+        await prisma.review.upsert({
+          where: { id: r.id },
+          update: {
+            name: r.author_name || r.name || 'Visiteur',
+            country: r.country || 'Dubaï',
+            rating: Math.min(5, Math.max(1, Number(r.rating) || 5)),
+            review: r.comment || r.text || '',
+            status: statusEnum,
+            updatedAt: new Date(),
+          },
+          create: {
+            id: r.id,
+            name: r.author_name || r.name || 'Visiteur',
+            country: r.country || 'Dubaï',
+            rating: Math.min(5, Math.max(1, Number(r.rating) || 5)),
+            review: r.comment || r.text || '',
+            status: statusEnum,
+            createdAt: r.created_at ? new Date(r.created_at) : new Date(),
+          },
+        });
+      }
+    } catch (err) {
+      console.warn('Could not sync to prisma.review via upsert:', err);
+    }
+  }
+
   return success;
 }
+
 
 export function saveAllReviews(reviews: ReviewItem[]): boolean {
   saveAllReviewsAsync(reviews).catch((err) => console.error('saveAllReviewsAsync failed:', err));
@@ -378,6 +440,16 @@ export async function deleteCustomerReviewAsync(id: string): Promise<boolean> {
 
   all.splice(index, 1);
   await saveAllReviewsAsync(all);
+
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import('./prisma');
+      await prisma.review.deleteMany({ where: { id } });
+    } catch (err) {
+      console.warn('Could not delete from prisma.review:', err);
+    }
+  }
+
   return true;
 }
 

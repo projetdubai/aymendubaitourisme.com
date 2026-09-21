@@ -127,6 +127,38 @@ export async function readPropertiesAsync(): Promise<PropertyItem[]> {
   } catch (err) {
     console.warn('Could not read properties from cloudDb:', err);
   }
+
+  // Direct Prisma table fallback
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import('./prisma');
+      const dbProps = await prisma.property.findMany({
+        where: { active: true },
+        orderBy: { createdAt: 'desc' },
+      });
+      if (Array.isArray(dbProps) && dbProps.length > 0) {
+        const mapped: PropertyItem[] = dbProps.map((p) => ({
+          id: p.id,
+          title: p.titleFr || p.titleEn || p.titleAr,
+          location: p.location,
+          type: p.type === 'VILLA' ? 'Villa' : p.type === 'COMMERCIAL' ? 'Bureau' : 'Appartement',
+          category: p.category === 'RENT' ? 'Location' : 'Vente',
+          price: `${p.price.toString()} ${p.currency}${p.category === 'RENT' ? '/an' : ''}`,
+          image: p.images?.[0] || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop',
+          bedrooms: p.bedrooms,
+          bathrooms: p.bathrooms,
+          area: `${p.area} sqft`,
+          status: p.active ? 'Active' : 'Inactive',
+          createdAt: p.createdAt ? p.createdAt.toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        }));
+        globalThis.__properties_cache = mapped;
+        return mapped;
+      }
+    } catch (err) {
+      console.warn('Could not read from prisma.property:', err);
+    }
+  }
+
   return readProperties();
 }
 
@@ -155,6 +187,55 @@ export async function writePropertiesAsync(properties: PropertyItem[]): Promise<
   await cloudDb.set('properties', properties);
   cloudDb.invalidate('properties');
 
+  // Also sync systematically using prisma.property.upsert()
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import('./prisma');
+      for (const p of properties) {
+        const propType = (p.type?.toLowerCase().includes('villa') ? 'VILLA' : (p.type?.toLowerCase().includes('bureau') || p.type?.toLowerCase().includes('commercial') ? 'COMMERCIAL' : 'APARTMENT')) as any;
+        const propCategory = (p.category?.toLowerCase().includes('location') || p.category?.toLowerCase().includes('rent') ? 'RENT' : 'SALE') as any;
+        const cleanPrice = parseFloat(p.price?.replace(/[^0-9.]/g, '') || '0') || 0;
+        const cleanArea = parseInt(p.area?.replace(/[^0-9]/g, '') || '0', 10) || 0;
+
+        await prisma.property.upsert({
+          where: { id: p.id },
+          update: {
+            titleEn: p.title,
+            titleAr: p.title,
+            titleFr: p.title,
+            type: propType,
+            category: propCategory,
+            location: p.location || 'Dubai',
+            bedrooms: Number(p.bedrooms) || 0,
+            bathrooms: Number(p.bathrooms) || 0,
+            area: cleanArea,
+            price: cleanPrice,
+            images: p.image ? [p.image] : [],
+            active: p.status !== 'Archived' && p.status !== 'Inactive',
+            updatedAt: new Date(),
+          },
+          create: {
+            id: p.id,
+            titleEn: p.title,
+            titleAr: p.title,
+            titleFr: p.title,
+            type: propType,
+            category: propCategory,
+            location: p.location || 'Dubai',
+            bedrooms: Number(p.bedrooms) || 0,
+            bathrooms: Number(p.bathrooms) || 0,
+            area: cleanArea,
+            price: cleanPrice,
+            images: p.image ? [p.image] : [],
+            active: p.status !== 'Archived' && p.status !== 'Inactive',
+          },
+        });
+      }
+    } catch (err) {
+      console.warn('Could not sync to prisma.property via upsert:', err);
+    }
+  }
+
   return true;
 }
 
@@ -164,3 +245,4 @@ export function writeProperties(properties: PropertyItem[]): boolean {
   });
   return true;
 }
+

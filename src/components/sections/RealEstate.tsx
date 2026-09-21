@@ -135,11 +135,42 @@ const PROPERTIES = [
   },
 ];
 
-export function RealEstate() {
+function mapPropertyItem(p: any) {
+  return {
+    id: p.id,
+    title: p.title,
+    type: p.type === 'Villa' || p.type === 'Villas' ? 'Villas' : (p.type === 'Bureau' || p.type === 'Commercial' ? 'Commercial' : 'Apartments'),
+    purpose: p.category === 'Vente' || p.category === 'Buy' || p.category === 'SALE' ? 'Buy' : 'Rent',
+    furnishing: 'Furnished',
+    status: 'Ready',
+    price: p.price ? p.price.replace(/[^\d,]/g, '') || p.price : 'Sur demande',
+    currency: p.category === 'Vente' || p.category === 'Buy' || p.category === 'SALE' ? 'AED' : 'AED/an',
+    location: p.location || 'Dubai',
+    bedrooms: Number(p.bedrooms) || 2,
+    bathrooms: Number(p.bathrooms) || 2,
+    area: p.area ? p.area.replace(/[^\d,]/g, '') || p.area : '1,200',
+    image: p.image || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=600&auto=format&fit=crop',
+  };
+}
+
+interface RealEstateProps {
+  initialProperties?: any[];
+  locale?: string;
+}
+
+export function RealEstate({ initialProperties }: RealEstateProps = {}) {
   const t = useTranslations('RealEstate');
   const tCommon = useTranslations('Common');
   
-  const [propertiesList, setPropertiesList] = useState<any[]>(PROPERTIES);
+  const [propertiesList, setPropertiesList] = useState<any[]>(() => {
+    if (initialProperties && initialProperties.length > 0) {
+      const activeProps = initialProperties.filter((p: any) => p.status === 'Active' || p.active !== false);
+      if (activeProps.length > 0) {
+        return activeProps.map(mapPropertyItem);
+      }
+    }
+    return PROPERTIES;
+  });
   const [purposeFilter, setPurposeFilter] = useState<'All' | 'Rent' | 'Buy'>('All');
   const [typeFilter, setTypeFilter] = useState<'All' | 'Apartments' | 'Villas' | 'Commercial'>('All');
   const [furnishingFilter, setFurnishingFilter] = useState<'All' | 'Furnished' | 'Unfurnished'>('All');
@@ -153,37 +184,25 @@ export function RealEstate() {
           const data = await res.json();
           if (data.success && Array.isArray(data.properties) && data.properties.length > 0) {
             const mapped = data.properties
-              .filter((p: any) => p.status === 'Active')
-              .map((p: any) => ({
-                id: p.id,
-                title: p.title,
-                type: p.type === 'Villa' ? 'Villas' : (p.type === 'Bureau' || p.type === 'Commercial' ? 'Commercial' : 'Apartments'),
-                purpose: p.category === 'Vente' || p.category === 'Buy' ? 'Buy' : 'Rent',
-                furnishing: 'Furnished',
-                status: 'Ready',
-                price: p.price ? p.price.replace(/[^\d,]/g, '') || p.price : 'Sur demande',
-                currency: p.category === 'Vente' ? 'AED' : 'AED/an',
-                location: p.location || 'Dubai',
-                bedrooms: Number(p.bedrooms) || 2,
-                bathrooms: Number(p.bathrooms) || 2,
-                area: p.area ? p.area.replace(/[^\d,]/g, '') || p.area : '1,200',
-                image: p.image || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=600&auto=format&fit=crop',
-              }));
+              .filter((p: any) => p.status === 'Active' || p.active !== false)
+              .map(mapPropertyItem);
 
             // Merge dynamic admin properties with defaults without duplicates
             setPropertiesList((prev) => {
               const existingIds = new Set(mapped.map((m: any) => m.id));
-              const filteredDefaults = PROPERTIES.filter((item) => !existingIds.has(item.id));
-              return [...mapped, ...filteredDefaults];
+              const remainingDefaults = prev.filter((p) => !existingIds.has(p.id));
+              return [...mapped, ...remainingDefaults];
             });
           }
         }
       } catch (err) {
-        console.warn('Could not load dynamic properties:', err);
+        console.warn('Failed to load dynamic properties:', err);
       }
     }
+
     loadDynamicProperties();
   }, []);
+
 
   const filteredProperties = propertiesList.filter((property) => {
     if (purposeFilter !== 'All' && property.purpose !== purposeFilter) return false;

@@ -365,6 +365,41 @@ export async function readServicesAsync(): Promise<TourismServiceItem[]> {
   } catch (err) {
     console.warn('Could not read services from cloudDb:', err);
   }
+
+  // Direct Prisma table fallback
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import('./prisma');
+      const dbServices = await prisma.service.findMany({
+        where: { active: true },
+        orderBy: { order: 'asc' },
+      });
+      if (Array.isArray(dbServices) && dbServices.length > 0) {
+        const mapped: TourismServiceItem[] = dbServices.map((s) => ({
+          id: s.id,
+          slug: s.slug,
+          title: { en: s.titleEn, ar: s.titleAr, fr: s.titleFr },
+          subtitle: { en: s.descriptionEn || '', ar: s.descriptionAr || '', fr: s.descriptionFr || '' },
+          description: { en: s.descriptionEn || '', ar: s.descriptionAr || '', fr: s.descriptionFr || '' },
+          iconName: s.icon || 'Sparkles',
+          image: s.image || 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop',
+          features: {
+            fr: ['Prestation haut de gamme', 'Accompagnement VIP'],
+            ar: ['خدمة راقية ومميزة', 'مرافقة ودعم كبار الشخصيات'],
+            en: ['Premium luxury service', 'VIP assistance'],
+          },
+          ctaLink: `/${s.slug}`,
+          active: s.active,
+          order: s.order,
+        }));
+        globalThis.__services_cache = mapped;
+        return mapped;
+      }
+    } catch (err) {
+      console.warn('Could not read from prisma.service:', err);
+    }
+  }
+
   return readServices();
 }
 
@@ -389,9 +424,50 @@ export async function writeServicesAsync(services: TourismServiceItem[]): Promis
     console.warn('Could not write to tmp services file:', err);
   }
 
-  // Await save to Cloud DB
+  // Await save to Cloud DB (SiteSetting in Prisma)
   await cloudDb.set('services', services);
   cloudDb.invalidate('services');
+
+  // Also sync each service systematically using prisma.service.upsert()
+  if (process.env.DATABASE_URL) {
+    try {
+      const { prisma } = await import('./prisma');
+      for (const s of services) {
+        const slug = s.slug || s.id;
+        await prisma.service.upsert({
+          where: { slug },
+          update: {
+            titleEn: s.title?.en || '',
+            titleAr: s.title?.ar || '',
+            titleFr: s.title?.fr || '',
+            descriptionEn: s.description?.en || s.subtitle?.en || '',
+            descriptionAr: s.description?.ar || s.subtitle?.ar || '',
+            descriptionFr: s.description?.fr || s.subtitle?.fr || '',
+            icon: s.iconName || '',
+            image: s.image || '',
+            active: s.active !== false,
+            order: s.order || 0,
+            updatedAt: new Date(),
+          },
+          create: {
+            slug,
+            titleEn: s.title?.en || '',
+            titleAr: s.title?.ar || '',
+            titleFr: s.title?.fr || '',
+            descriptionEn: s.description?.en || s.subtitle?.en || '',
+            descriptionAr: s.description?.ar || s.subtitle?.ar || '',
+            descriptionFr: s.description?.fr || s.subtitle?.fr || '',
+            icon: s.iconName || '',
+            image: s.image || '',
+            active: s.active !== false,
+            order: s.order || 0,
+          },
+        });
+      }
+    } catch (err) {
+      console.warn('Could not sync to prisma.service via upsert:', err);
+    }
+  }
 
   return true;
 }
@@ -402,3 +478,4 @@ export function writeServices(services: TourismServiceItem[]): boolean {
   });
   return true;
 }
+

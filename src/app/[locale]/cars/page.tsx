@@ -15,6 +15,7 @@ import CarFleetSection from "@/components/cars/CarFleetSection";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 interface CarsPageProps {
   params: Promise<{ locale: string }>;

@@ -4,6 +4,10 @@ import path from "path";
 import { comparePassword, generateToken } from "@/lib/auth";
 import { cloudDb } from "@/lib/cloud-db";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+
 const ADMINS_FILE = path.join(process.cwd(), "src", "data", "admins.json");
 
 function readAdmins() {

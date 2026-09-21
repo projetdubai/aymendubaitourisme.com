@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { CarItem, readCarsAsync, writeCarsAsync, DEFAULT_CARS } from "@/lib/cars";
 import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 export async function GET() {
   try {
@@ -32,8 +34,8 @@ export async function POST(req: NextRequest) {
     }
 
     const newCar: CarItem = {
-      id: body.id || `CAR-${Date.now().toString().slice(-4)}`,
-      name: body.name || "Nouveau Véhicule",
+      id: body.id || `car-${Date.now().toString().slice(-4)}`,
+      name: body.name || "Véhicule",
       brand: body.brand || "Marque",
       category: body.category || "Supercars & Sportives",
       pricePerDay: body.pricePerDay || "1,000 AED",
@@ -56,6 +58,7 @@ export async function POST(req: NextRequest) {
     const updated = [newCar, ...currentCars.filter((c) => c.id !== newCar.id)];
     await writeCarsAsync(updated);
     await revalidateSite('cars');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, car: newCar });
   } catch (error: any) {
@@ -116,6 +119,7 @@ export async function PUT(req: NextRequest) {
 
     await writeCarsAsync(updatedList);
     await revalidateSite('cars');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, car: updatedCar });
   } catch (error: any) {
@@ -139,6 +143,7 @@ export async function DELETE(req: NextRequest) {
     const updated = currentCars.filter((c) => c.id !== id);
     await writeCarsAsync(updated);
     await revalidateSite('cars');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, deletedId: id });
   } catch (error: any) {

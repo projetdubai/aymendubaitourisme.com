@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { 
   PropertyItem, 
   readPropertiesAsync, 
@@ -9,6 +10,7 @@ import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 export async function GET() {
   try {
@@ -46,6 +48,7 @@ export async function POST(request: NextRequest) {
     const updated = [newProperty, ...properties.filter((p) => p.id !== newProperty.id)];
     await writePropertiesAsync(updated);
     await revalidateSite('properties');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json(
       { success: true, message: "Bien immobilier ajouté avec succès !", property: newProperty },
@@ -81,6 +84,7 @@ export async function PUT(request: NextRequest) {
       const updated = [newProperty, ...properties];
       await writePropertiesAsync(updated);
       await revalidateSite('properties');
+      try { revalidatePath('/', 'layout'); } catch {}
 
       return NextResponse.json({
         success: true,
@@ -92,6 +96,7 @@ export async function PUT(request: NextRequest) {
     properties[index] = { ...properties[index], ...body };
     await writePropertiesAsync(properties);
     await revalidateSite('properties');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({
       success: true,
@@ -122,7 +127,18 @@ export async function DELETE(request: NextRequest) {
     const properties = await readPropertiesAsync();
     const filtered = properties.filter((p) => p.id !== id);
     await writePropertiesAsync(filtered);
+
+    if (process.env.DATABASE_URL) {
+      try {
+        const { prisma } = await import('@/lib/prisma');
+        await prisma.property.deleteMany({ where: { id } });
+      } catch (err) {
+        console.warn('Could not delete from prisma.property:', err);
+      }
+    }
+
     await revalidateSite('properties');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({
       success: true,

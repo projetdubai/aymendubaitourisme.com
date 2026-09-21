@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { cloudDb } from "@/lib/cloud-db";
@@ -7,6 +8,8 @@ import path from "path";
 import os from "os";
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 const quoteSchema = z.object({
   fullName: z.string().min(2),
@@ -93,6 +96,8 @@ export async function POST(request: NextRequest) {
     try {
       fs.writeFileSync(TMP_FILE, JSON.stringify(updatedQuotes, null, 2), "utf-8");
     } catch {}
+
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json(
       {

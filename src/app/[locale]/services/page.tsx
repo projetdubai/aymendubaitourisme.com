@@ -10,6 +10,7 @@ import { readServicesAsync } from "@/lib/services";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 interface ServicesPageProps {
   params: Promise<{ locale: string }>;
@@ -48,7 +49,7 @@ export default async function ServicesPage({ params }: ServicesPageProps) {
       <Header />
       <main className="pt-24 min-h-screen">
         <CustomServicesGrid services={services} locale={locale} />
-        <Services />
+        <Services initialServices={services} locale={locale} />
         <ExtraServices />
         <WhyChooseUs />
       </main>

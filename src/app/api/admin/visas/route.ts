@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { VisaItem, readVisasAsync, writeVisasAsync, DEFAULT_VISAS } from "@/lib/visas";
 import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 
 export async function GET() {
@@ -64,6 +66,7 @@ export async function POST(req: NextRequest) {
     const updated = [newVisa, ...currentVisas.filter((v) => v.id !== newVisa.id)];
     await writeVisasAsync(updated);
     await revalidateSite('visas');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, visa: newVisa, visas: updated });
   } catch (error: any) {
@@ -123,6 +126,7 @@ export async function PUT(req: NextRequest) {
 
     await writeVisasAsync(updated);
     await revalidateSite('visas');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, visa: updatedVisa, visas: updated });
   } catch (error: any) {
@@ -151,6 +155,7 @@ export async function DELETE(req: NextRequest) {
 
     await writeVisasAsync(updated);
     await revalidateSite('visas');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({ success: true, visas: updated });
   } catch (error: any) {

@@ -3,6 +3,10 @@ import { exec } from "child_process";
 import fs from "fs";
 import path from "path";
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const fetchCache = 'force-no-store';
+
 // Deployment state cache
 declare global {
   var __last_deployment: {

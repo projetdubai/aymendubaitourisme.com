@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { 
   updateCustomerReviewAsync, 
   deleteCustomerReviewAsync 
@@ -7,6 +8,7 @@ import { revalidateSite } from '@/lib/revalidate';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+export const fetchCache = 'force-no-store';
 
 // PATCH /api/reviews/[id] — update moderation status or edit fields
 export async function PATCH(
@@ -28,6 +30,7 @@ export async function PATCH(
 
     // Invalidate site cache so changes immediately reflect in public pages in < 1s
     await revalidateSite('reviews');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     const statusLabels: Record<string, string> = {
       approved: 'Avis approuvé et publié en direct sur le site public !',
@@ -75,6 +78,7 @@ export async function PUT(
     }
 
     await revalidateSite('reviews');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({
       success: true,
@@ -107,6 +111,7 @@ export async function DELETE(
     }
 
     await revalidateSite('reviews');
+    try { revalidatePath('/', 'layout'); } catch {}
 
     return NextResponse.json({
       success: true,

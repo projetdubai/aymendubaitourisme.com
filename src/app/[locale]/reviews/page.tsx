@@ -3,9 +3,11 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import WhatsAppButton from "@/components/layout/WhatsAppButton";
 import { Reviews } from "@/components/sections/Reviews";
+import { getApprovedReviewsAsync } from "@/lib/reviews";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 interface ReviewsPageProps {
   params: Promise<{ locale: string }>;
@@ -37,11 +39,13 @@ export default async function ReviewsPage({ params }: ReviewsPageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
 
+  const reviews = await getApprovedReviewsAsync();
+
   return (
     <>
       <Header />
       <main className="pt-20">
-        <Reviews />
+        <Reviews initialReviews={reviews} />
       </main>
       <Footer />
       <WhatsAppButton />
