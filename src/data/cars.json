@@ -1,0 +1,148 @@
+[
+  {
+    "id": "CAR-201",
+    "name": "Audi A3 Sedan 2025",
+    "brand": "Audi",
+    "category": "Berlines & Économiques",
+    "pricePerDay": "350 AED",
+    "pricePerWeek": "2,200 AED",
+    "pricePerMonth": "7,500 AED",
+    "image": "/cars/audi-a3-2025/1.jpeg",
+    "images": [
+      "/cars/audi-a3-2025/1.jpeg",
+      "/cars/audi-a3-2025/2.jpeg",
+      "/cars/audi-a3-2025/3.jpeg",
+      "/cars/audi-a3-2025/4.jpeg"
+    ],
+    "transmission": "Automatique S-Tronic",
+    "seats": 5,
+    "engine": "2.0L TFSI 190 ch",
+    "features": [
+      "Cockpit Virtuel Audi",
+      "Climatisation Bizone",
+      "Apple CarPlay & Android Auto",
+      "Assurance tous risques incluse"
+    ],
+    "status": "Disponible",
+    "featured": false
+  },
+  {
+    "id": "CAR-202",
+    "name": "BMW 520i M-Sport 2026",
+    "brand": "BMW",
+    "category": "Luxe & Prestige",
+    "pricePerDay": "750 AED",
+    "pricePerWeek": "4,800 AED",
+    "pricePerMonth": "16,500 AED",
+    "image": "/cars/bmw-520i-2026/1.jpeg",
+    "images": [
+      "/cars/bmw-520i-2026/1.jpeg",
+      "/cars/bmw-520i-2026/2.jpeg",
+      "/cars/bmw-520i-2026/3.jpeg",
+      "/cars/bmw-520i-2026/4.jpeg",
+      "/cars/bmw-520i-2026/5.jpeg",
+      "/cars/bmw-520i-2026/6.jpeg",
+      "/cars/bmw-520i-2026/7.jpeg"
+    ],
+    "transmission": "Automatique Steptronic",
+    "seats": 5,
+    "engine": "TwinPower Turbo 208 ch",
+    "features": [
+      "Pack M-Sport complet",
+      "BMW Curved Display",
+      "Conduite semi-autonome",
+      "Livraison aéroport VIP"
+    ],
+    "status": "Disponible",
+    "featured": true
+  },
+  {
+    "id": "CAR-203",
+    "name": "BMW X6 xDrive 2026",
+    "brand": "BMW",
+    "category": "SUV de Luxe",
+    "pricePerDay": "1,400 AED",
+    "pricePerWeek": "8,900 AED",
+    "pricePerMonth": "29,000 AED",
+    "image": "/cars/bmw-x6-2026/1.jpeg",
+    "images": [
+      "/cars/bmw-x6-2026/1.jpeg",
+      "/cars/bmw-x6-2026/2.jpeg",
+      "/cars/bmw-x6-2026/3.jpeg",
+      "/cars/bmw-x6-2026/4.jpeg",
+      "/cars/bmw-x6-2026/5.jpeg",
+      "/cars/bmw-x6-2026/6.jpeg",
+      "/cars/bmw-x6-2026/7.jpeg",
+      "/cars/bmw-x6-2026/8.jpeg",
+      "/cars/bmw-x6-2026/9.jpeg",
+      "/cars/bmw-x6-2026/10.jpeg"
+    ],
+    "transmission": "Automatique 8 Rapports",
+    "seats": 5,
+    "engine": "6 Cylindres en ligne 381 ch",
+    "features": [
+      "Calandre Illuminée Iconic Glow",
+      "Toit ouvrant panoramique Sky Lounge",
+      "Son Harman Kardon",
+      "Transmission intégrale xDrive"
+    ],
+    "status": "Disponible",
+    "featured": true
+  },
+  {
+    "id": "CAR-204",
+    "name": "Land Rover Defender 110 2025",
+    "brand": "Land Rover",
+    "category": "SUV de Luxe",
+    "pricePerDay": "1,200 AED",
+    "pricePerWeek": "7,800 AED",
+    "pricePerMonth": "26,000 AED",
+    "image": "/cars/defender-2025/1.jpeg",
+    "images": [
+      "/cars/defender-2025/1.jpeg",
+      "/cars/defender-2025/2.jpeg",
+      "/cars/defender-2025/3.jpeg",
+      "/cars/defender-2025/4.jpeg",
+      "/cars/defender-2025/5.jpeg"
+    ],
+    "transmission": "Automatique 4x4",
+    "seats": 5,
+    "engine": "3.0L i6 Turbo 400 ch",
+    "features": [
+      "Suspension pneumatique adaptative",
+      "Caméras 3D Surround 360°",
+      "Capacités tout-terrain extrêmes",
+      "Design baroudeur moderne"
+    ],
+    "status": "Disponible",
+    "featured": true
+  },
+  {
+    "id": "CAR-205",
+    "name": "Range Rover Sport Dynamic 2025",
+    "brand": "Land Rover",
+    "category": "SUV de Luxe",
+    "pricePerDay": "1,800 AED",
+    "pricePerWeek": "11,500 AED",
+    "pricePerMonth": "38,000 AED",
+    "image": "/cars/range-rover-sport-2025/1.jpeg",
+    "images": [
+      "/cars/range-rover-sport-2025/1.jpeg",
+      "/cars/range-rover-sport-2025/2.jpeg",
+      "/cars/range-rover-sport-2025/3.jpeg",
+      "/cars/range-rover-sport-2025/4.jpeg",
+      "/cars/range-rover-sport-2025/5.jpeg"
+    ],
+    "transmission": "Automatique 8 rapports",
+    "seats": 5,
+    "engine": "V8 P530 Twin Turbo",
+    "features": [
+      "Finition Dynamic SE",
+      "Sièges cuir massants",
+      "Son Meridian Signature 3D",
+      "Suspension Dynamic Response Pro"
+    ],
+    "status": "Disponible",
+    "featured": true
+  }
+]

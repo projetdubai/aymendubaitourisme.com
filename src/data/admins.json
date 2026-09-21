@@ -1,0 +1,11 @@
+[
+  {
+    "id": "adm_1",
+    "name": "Aymen Boulabeiz",
+    "email": "aymenboulabeiz8@gmail.com",
+    "password": "Aymen16101997@",
+    "passwordHash": "Aymen16101997@",
+    "role": "Super Administrateur",
+    "createdAt": "2026-09-17"
+  }
+]

@@ -1,0 +1,362 @@
+import fs from 'fs';
+import path from 'path';
+import os from 'os';
+import { cloudDb } from './cloud-db';
+
+export interface FlightLocalizedText {
+  fr: string;
+  ar: string;
+  en: string;
+}
+
+export interface FlightItem {
+  id: string;
+  airline: string;
+  flightNumber?: string;
+  fromCity: FlightLocalizedText;
+  toCity: FlightLocalizedText;
+  cabinClass: 'economy' | 'premium' | 'business' | 'first';
+  flightType: 'direct' | 'escales' | 'vip';
+  priceStartingFrom: string;
+  badge: FlightLocalizedText;
+  baggageAllowance: string;
+  duration: string;
+  features: {
+    fr: string[];
+    ar: string[];
+    en: string[];
+  };
+  image?: string;
+  active: boolean;
+  order: number;
+}
+
+export const DEFAULT_FLIGHTS: FlightItem[] = [
+  {
+    id: 'fl-cdg-dxb',
+    airline: 'Emirates (A380)',
+    flightNumber: 'EK 074',
+    fromCity: {
+      fr: 'Paris CDG',
+      ar: 'باريس (CDG)',
+      en: 'Paris CDG',
+    },
+    toCity: {
+      fr: 'Dubaï DXB',
+      ar: 'دبي (DXB)',
+      en: 'Dubai DXB',
+    },
+    cabinClass: 'economy',
+    flightType: 'direct',
+    priceStartingFrom: '1,850 AED',
+    badge: {
+      fr: 'Vol Direct Quotidien',
+      ar: 'رحلة مباشرة يومية',
+      en: 'Daily Direct Flight',
+    },
+    baggageAllowance: '2 x 23 kg inclus',
+    duration: '6h 40m',
+    features: {
+      fr: [
+        'Vol direct sans escale sur Airbus A380',
+        '2 bagages de 23 kg inclus en soute',
+        'Repas chaud gastronomique & boissons offertes',
+        'Système de divertissement primé ICE (5,000 chaînes)',
+      ],
+      ar: [
+        'رحلة مباشرة بدون توقف على طائرة إيرباص A380 العملاقة',
+        'حقيبتان وزن 23 كجم لكل حقيبة مشمولة مجاناً',
+        'وجبات فاخرة ومشروبات طوال الرحلة',
+        'نظام ترفيه جوي رائد ice الحائز على جوائز عالمية',
+      ],
+      en: [
+        'Non-stop direct flight on flagship Airbus A380',
+        '2x 23 kg checked baggage included',
+        'Complimentary gourmet meal and premium beverages',
+        'Award-winning ice in-flight entertainment system',
+      ],
+    },
+    image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800&auto=format&fit=crop',
+    active: true,
+    order: 1,
+  },
+  {
+    id: 'fl-alg-dxb',
+    airline: 'Air Algérie / Emirates',
+    flightNumber: 'AH 4062',
+    fromCity: {
+      fr: 'Alger (Houari Boumédiène)',
+      ar: 'الجزائر العاصمة (ALG)',
+      en: 'Algiers ALG',
+    },
+    toCity: {
+      fr: 'Dubaï DXB',
+      ar: 'دبي (DXB)',
+      en: 'Dubai DXB',
+    },
+    cabinClass: 'economy',
+    flightType: 'direct',
+    priceStartingFrom: '1,650 AED',
+    badge: {
+      fr: 'Liaison Directe',
+      ar: 'رحلة مباشرة أسبوعية',
+      en: 'Direct Route',
+    },
+    baggageAllowance: '30 kg + bagage cabine',
+    duration: '6h 15m',
+    features: {
+      fr: [
+        'Liaisons directes Alger ⇄ Dubaï',
+        'Franchise bagages généreuse 30 kg',
+        'Repas complet et collation servis à bord',
+        'Possibilité de modification de date flexible',
+      ],
+      ar: [
+        'رحلات مباشرة بين الجزائر العاصمة ودبي',
+        'وزن أمتعة مريح 30 كجم مسجلة + حقيبة يد',
+        'وجبات حلال طازجة ومشروبات على متن الطائرة',
+        'إمكانية تعديل التواريخ بمرونة وسهولة',
+      ],
+      en: [
+        'Direct connection between Algiers and Dubai',
+        'Generous 30 kg baggage allowance included',
+        'Complimentary Halal meal service on board',
+        'Flexible date rebooking available',
+      ],
+    },
+    image: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=800&auto=format&fit=crop',
+    active: true,
+    order: 2,
+  },
+  {
+    id: 'fl-cas-dxb',
+    airline: 'Emirates / Royal Air Maroc',
+    flightNumber: 'EK 752',
+    fromCity: {
+      fr: 'Casablanca (CMN)',
+      ar: 'الدار البيضاء (CMN)',
+      en: 'Casablanca CMN',
+    },
+    toCity: {
+      fr: 'Dubaï DXB',
+      ar: 'دبي (DXB)',
+      en: 'Dubai DXB',
+    },
+    cabinClass: 'economy',
+    flightType: 'direct',
+    priceStartingFrom: '1,950 AED',
+    badge: {
+      fr: 'Top Destination',
+      ar: 'الأكثر طلباً',
+      en: 'Popular Flight',
+    },
+    baggageAllowance: '2 x 23 kg',
+    duration: '7h 30m',
+    features: {
+      fr: [
+        'Vol direct confortable sur Boeing 777 ou A380',
+        'Enregistrement prioritaire possible',
+        'Cumul de miles Skywards ou Safar Flyer',
+        'Assistance aéroportuaire VIP disponible',
+      ],
+      ar: [
+        'رحلة مباشرة مريحة على طائرات بوينغ 777 أو A380',
+        'إمكانية إنجاز إجراءات السفر إلكترونياً وبسرعة',
+        'كسب أميال المكافآت',
+        'خدمات استقبال ومساعدة في مطار دبي',
+      ],
+      en: [
+        'Comfortable direct flight on Boeing 777 or A380',
+        'Online express check-in',
+        'Frequent flyer miles accumulation',
+        'Dubai Airport VIP Meet & Assist add-on',
+      ],
+    },
+    image: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?q=80&w=800&auto=format&fit=crop',
+    active: true,
+    order: 3,
+  },
+  {
+    id: 'fl-tun-dxb',
+    airline: 'Emirates',
+    flightNumber: 'EK 748',
+    fromCity: {
+      fr: 'Tunis-Carthage (TUN)',
+      ar: 'تونس قرطاج (TUN)',
+      en: 'Tunis TUN',
+    },
+    toCity: {
+      fr: 'Dubaï DXB',
+      ar: 'دبي (DXB)',
+      en: 'Dubai DXB',
+    },
+    cabinClass: 'economy',
+    flightType: 'direct',
+    priceStartingFrom: '1,750 AED',
+    badge: {
+      fr: 'Meilleur Tarif',
+      ar: 'أفضل سعر',
+      en: 'Best Value',
+    },
+    baggageAllowance: '2 x 23 kg',
+    duration: '5h 50m',
+    features: {
+      fr: [
+        'Vol direct sans escale Tunis vers Dubaï',
+        'Bagages de soute 46 kg au total',
+        'Connexion Wi-Fi à bord disponible',
+        'Assistance conciergerie 24/7 sur WhatsApp',
+      ],
+      ar: [
+        'رحلة مباشرة بدون توقف من تونس إلى دبي',
+        'إجمالي أمتعة 46 كجم على قطعتين',
+        'خدمة الواي فاي متوفرة على متن الطائرة',
+        'دعم كونسيرج على مدار 24 ساعة عبر واتساب',
+      ],
+      en: [
+        'Non-stop direct flight from Tunis to Dubai',
+        '46 kg total checked baggage allowance',
+        'Onboard Wi-Fi connectivity available',
+        '24/7 WhatsApp concierge assistance',
+      ],
+    },
+    image: 'https://images.unsplash.com/photo-1520437358207-323b43b50729?q=80&w=800&auto=format&fit=crop',
+    active: true,
+    order: 4,
+  },
+  {
+    id: 'fl-business-class',
+    airline: 'Emirates Business Class',
+    flightNumber: 'VIP Routes',
+    fromCity: {
+      fr: 'Europe & Maghreb',
+      ar: 'أوروبا والمغرب العربي',
+      en: 'Europe & North Africa',
+    },
+    toCity: {
+      fr: 'Dubaï DXB (Terminal 3)',
+      ar: 'دبي (مبنى 3)',
+      en: 'Dubai DXB (Terminal 3)',
+    },
+    cabinClass: 'business',
+    flightType: 'vip',
+    priceStartingFrom: '6,500 AED',
+    badge: {
+      fr: 'Excellence VIP',
+      ar: 'فخامة رجال الأعمال',
+      en: 'VIP Business',
+    },
+    baggageAllowance: '2 x 32 kg + 2 cabine',
+    duration: 'Sur Mesure',
+    features: {
+      fr: [
+        'Fauteuils-lits 180° avec matelas grand confort',
+        'Accès exclusif aux Salons VIP Business Lounge',
+        'Embarquement prioritaire & livraison bagages prioritaire',
+        'Voiture avec chauffeur privé sur trajets éligibles',
+      ],
+      ar: [
+        'مقاعد تتحول إلى سرير مستوٍ 180 درجة مع مرتبة مريحة',
+        'دخول حصري لصالات كبار الشخصيات الفاخرة في المطارات',
+        'أولوية الصعود للطائرة واستلام الأمتعة',
+        'سيارة فخمة مع سائق خاص للمسارات المؤهلة',
+      ],
+      en: [
+        'Lie-flat bed seats with comfortable mattress and duvet',
+        'Exclusive access to premium airport Business Lounges',
+        'Priority boarding and express baggage handling',
+        'Chauffeur-drive service on eligible itineraries',
+      ],
+    },
+    image: 'https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=800&auto=format&fit=crop',
+    active: true,
+    order: 5,
+  },
+];
+
+declare global {
+  var __flights_cache: FlightItem[] | undefined;
+}
+
+const PRIMARY_FILE = path.join(process.cwd(), 'src', 'data', 'flights.json');
+const TMP_FILE = path.join(os.tmpdir(), 'aymen_flights.json');
+
+export function readFlights(): FlightItem[] {
+  if (globalThis.__flights_cache && Array.isArray(globalThis.__flights_cache) && globalThis.__flights_cache.length > 0) {
+    return globalThis.__flights_cache;
+  }
+
+  // 1. Primary file
+  try {
+    if (fs.existsSync(PRIMARY_FILE)) {
+      const data = fs.readFileSync(PRIMARY_FILE, 'utf-8');
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        globalThis.__flights_cache = parsed;
+        return parsed;
+      }
+    }
+  } catch (err) {
+    console.warn('Could not read primary flights file:', err);
+  }
+
+  // 2. Tmp file
+  try {
+    if (fs.existsSync(TMP_FILE)) {
+      const data = fs.readFileSync(TMP_FILE, 'utf-8');
+      const parsed = JSON.parse(data);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        globalThis.__flights_cache = parsed;
+        return parsed;
+      }
+    }
+  } catch (err) {
+    console.warn('Could not read tmp flights file:', err);
+  }
+
+  globalThis.__flights_cache = [...DEFAULT_FLIGHTS];
+  return globalThis.__flights_cache;
+}
+
+export async function readFlightsAsync(): Promise<FlightItem[]> {
+  try {
+    const cloudFlights = await cloudDb.get<FlightItem[]>('flights');
+    if (Array.isArray(cloudFlights) && cloudFlights.length > 0) {
+      globalThis.__flights_cache = cloudFlights;
+      return cloudFlights;
+    }
+  } catch (err) {
+    console.warn('Could not read flights from cloudDb:', err);
+  }
+  return readFlights();
+}
+
+export function writeFlights(flights: FlightItem[]): boolean {
+  globalThis.__flights_cache = [...flights];
+
+  // Primary file
+  try {
+    const dir = path.dirname(PRIMARY_FILE);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+    fs.writeFileSync(PRIMARY_FILE, JSON.stringify(flights, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Could not write to primary flights file:', err);
+  }
+
+  // Tmp file
+  try {
+    fs.writeFileSync(TMP_FILE, JSON.stringify(flights, null, 2), 'utf-8');
+  } catch (err) {
+    console.warn('Could not write to tmp flights file:', err);
+  }
+
+  // Async save to Cloud DB
+  cloudDb.set('flights', flights).catch((err) => {
+    console.warn('Error saving flights to cloudDb:', err);
+  });
+  cloudDb.invalidate('flights');
+
+  return true;
+}

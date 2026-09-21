@@ -1,0 +1,459 @@
+{
+  "Metadata": {
+    "title": "AYMEN DUBAI TOURISME | Your Complete Journey Partner",
+    "description": "Premium Dubai tourism, visa services, real estate, and complete travel solutions with AYMEN DUBAI TOURISME."
+  },
+  "Navigation": {
+    "home": "Home",
+    "services": "Services",
+    "visa": "Visa",
+    "hotels": "Hotels",
+    "flights": "Flights",
+    "cars": "Cars",
+    "realEstate": "Real Estate",
+    "reviews": "Reviews",
+    "contact": "Contact",
+    "getQuote": "Get a Quote",
+    "whatsappMessage": "Hello, I would like more information about your Dubai tourism services."
+  },
+  "Hero": {
+    "headline": "Discover Dubai,we make your travel easy.",
+    "subtitle": "Experience the best of Dubai with AYMEN DUBAI TOURISME. From visa assistance and hotel bookings to car rentals, tourism activities, and premium real estate services, we provide comprehensive travel solutions tailored for you.",
+    "ctaPrimary": "Get a Free Quote",
+    "ctaSecondary": "Explore Services"
+  },
+  "Services": {
+    "title": "Our Services",
+    "subtitle": "Comprehensive solutions for your Dubai experience.",
+    "dubaiVisa": {
+      "title": "Dubai Visa Services",
+      "description": "Hassle-free tourist visas for Dubai, including 1-month, 2-month, and multiple-entry options tailored to your travel plans."
+    },
+    "visaExtension": {
+      "title": "Visa Extension",
+      "description": "Easily extend your stay in Dubai with our efficient visa extension services without leaving the country."
+    },
+    "hotelBooking": {
+      "title": "Hotel Booking",
+      "description": "Find the perfect accommodation. We offer competitive rates for hotels ranging from budget-friendly options to luxury resorts."
+    },
+    "flightBooking": {
+      "title": "Flight Booking",
+      "description": "Secure the best flight deals to and from Dubai with our reliable ticketing services."
+    },
+    "carRental": {
+      "title": "Car Rental",
+      "description": "Explore the city at your own pace with our flexible daily, weekly, and monthly car rental plans."
+    },
+    "tourism": {
+      "title": "UAE Tourism Services",
+      "description": "Discover the wonders of the UAE with our guided tours, desert safaris, and exclusive attraction passes."
+    },
+    "realEstate": {
+      "title": "Real Estate",
+      "description": "Your trusted partner in Dubai real estate. We assist with residential and commercial rentals, sales, furnished or unfurnished properties, as well as ready and off-plan investments."
+    }
+  },
+  "ExtraServices": {
+    "title": "Additional Services",
+    "subtitle": "We offer a wide range of services to make your journey easier",
+    "qatarVisa": {
+      "title": "🇶🇦 Qatar Visa",
+      "description": "Submission and follow-up of Qatar visa applications with ease"
+    },
+    "omanVisa": {
+      "title": "🇴🇲 Oman Visa",
+      "description": "Tourist visas and application services for the Sultanate of Oman"
+    },
+    "saudiVisa": {
+      "title": "🇸🇦 Saudi Arabia Visa",
+      "description": "Tourist visa services for the Kingdom of Saudi Arabia"
+    },
+    "flightBooking": {
+      "title": "✈️ Flight Booking",
+      "description": "International flights | Round trips | Finding the best available options"
+    },
+    "hotelBooking": {
+      "title": "🏨 Hotel Booking",
+      "description": "Hotels in Dubai and the UAE | Bookings at the best prices"
+    },
+    "carRental": {
+      "title": "🚗 Car Rental in Dubai",
+      "description": "Luxury and economy cars | Daily, weekly and monthly rentals"
+    },
+    "travelServices": {
+      "title": "📄 Travel & Tourism Services",
+      "description": "Complete tourism programs | Tours in Dubai and the UAE | VIP services"
+    },
+    "cta": "Book Now",
+    "whatsappCta": "Contact via WhatsApp"
+  },
+  "WhyChooseUs": {
+    "title": "Why Choose Us",
+    "professionalService": {
+      "title": "Professional Service",
+      "description": "Our dedicated team delivers high-quality, professional assistance every step of the way."
+    },
+    "fastResponse": {
+      "title": "Fast Response",
+      "description": "We understand the value of your time, providing swift replies and prompt solutions."
+    },
+    "expertise": {
+      "title": "UAE Tourism Expertise",
+      "description": "Benefit from our deep local knowledge and strong network across the United Arab Emirates."
+    },
+    "personalized": {
+      "title": "Personalized Assistance",
+      "description": "Enjoy services tailored specifically to your individual travel and investment needs."
+    },
+    "transparent": {
+      "title": "Transparent Communication",
+      "description": "We believe in clear, honest communication with no hidden fees or surprises."
+    },
+    "completeSolutions": {
+      "title": "Complete Travel Solutions",
+      "description": "From your initial visa to finding your dream home, we handle all aspects of your journey."
+    }
+  },
+  "RealEstate": {
+    "headline": "Find Your Next Property in Dubai",
+    "subheadline": "Explore our handpicked selection of premium residences and luxury investment opportunities in Dubai.",
+    "filters": {
+      "all": "All",
+      "rent": "Rent",
+      "buy": "Buy",
+      "allTypes": "All Types",
+      "apartments": "Apartments",
+      "villas": "Villas",
+      "commercial": "Commercial",
+      "furnished": "Furnished",
+      "unfurnished": "Unfurnished",
+      "ready": "Ready",
+      "offPlan": "Off-plan"
+    },
+    "types": {
+      "all": "All Types",
+      "apartments": "Apartments",
+      "villas": "Villas",
+      "commercial": "Commercial"
+    },
+    "card": {
+      "bedrooms": "Beds",
+      "bathrooms": "Baths",
+      "sqft": "Sqft",
+      "area": "Area"
+    },
+    "purpose": {
+      "buy": "Buy",
+      "rent": "Rent"
+    },
+    "furnishing": {
+      "furnished": "Furnished",
+      "unfurnished": "Unfurnished"
+    },
+    "price": "Sale Price",
+    "rent": "Annual Rent",
+    "viewAll": "View All Properties"
+  },
+  "Reviews": {
+    "title": "Client Testimonials & Reviews",
+    "subtitle": "Discover authentic feedback from our international guests who trusted us for their travel and investments in Dubai.",
+    "leaveReview": "Share Your Experience",
+    "leaveReviewTitle": "Write a Client Review",
+    "rating": "Overall Rating",
+    "reviewText": "Your Testimonial",
+    "reviewPlaceholder": "Share your experience with our services (visa handling, concierge, punctuality, overall stay)...",
+    "uploadPhoto": "Upload a Photo (Optional)",
+    "moderationNotice": "To maintain integrity and trust, all submitted reviews are moderated by our team before publication.",
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "e.g. David Miller",
+      "country": "Country of Residence",
+      "countryPlaceholder": "e.g. United Kingdom, USA, Canada...",
+      "rating": "Rating",
+      "review": "Your Review",
+      "photo": "Upload Photo (Optional)"
+    },
+    "success": "Thank you sincerely for your feedback! Your review will be published once approved by our team.",
+    "sample": {
+      "one": "Exceptional service! They handled my visa and hotel booking seamlessly.",
+      "two": "Highly recommend AYMEN DUBAI TOURISME for real estate investment. Very professional."
+    }
+  },
+  "Contact": {
+    "title": "Contact Our VIP Concierge",
+    "subtitle": "Our Dubai-based specialists are available 7 days a week to advise you and craft your bespoke experience.",
+    "phone": {
+      "title": "Direct Phone Line",
+      "action": "Call a Specialist"
+    },
+    "whatsapp": {
+      "title": "24/7 WhatsApp Support",
+      "action": "Chat on WhatsApp"
+    },
+    "email": {
+      "title": "Email Correspondence",
+      "action": "Send an Email"
+    },
+    "form": {
+      "title": "Direct Inquiry Form",
+      "name": "Full Name",
+      "namePlaceholder": "e.g. David Miller",
+      "email": "Email Address",
+      "emailPlaceholder": "david.miller@example.com",
+      "phone": "Phone / WhatsApp Number",
+      "phonePlaceholder": "+971 50 123 4567",
+      "message": "Inquiry Details or Requirements",
+      "messagePlaceholder": "Tell us about your plans in Dubai (intended dates, service category, specific requests)...",
+      "send": "Send Message",
+      "sending": "Sending your message...",
+      "successTitle": "Message Sent Successfully",
+      "success": "Thank you for reaching out. A dedicated specialist from AYMEN DUBAI TOURISME will respond to you shortly."
+    },
+    "info": {
+      "address": "Address",
+      "email": "Email",
+      "phone": "Phone",
+      "social": "Connect with Us on Social Media"
+    },
+    "followUs": "Follow us on social media"
+  },
+  "QuotePage": {
+    "title": "Request a Tailored Quote",
+    "subtitle": "Select your desired services to receive a detailed, transparent proposal customized to your expectations within 24 hours.",
+    "metaTitle": "Get a Quote - AYMEN DUBAI TOURISME",
+    "metaDescription": "Request a fast, custom quote for Dubai visas, hotels, flights, luxury car rentals, tourism packages, and real estate."
+  },
+  "Quote": {
+    "title": "Request a Tailored Quote",
+    "subtitle": "Bespoke hospitality and investment concierge services across Dubai and the UAE.",
+    "step1": "1. Select Service",
+    "step2": "2. Choose Package",
+    "step3": "3. Details & Contact",
+    "step4": "4. Confirmation",
+    "selectService": "Select Your Primary Service",
+    "steps": {
+      "one": "Select Service",
+      "two": "Provide Details",
+      "three": "Contact Info"
+    },
+    "selectOption": "Choose the option that best matches your project",
+    "services": {
+      "visa": {
+        "title": "UAE Visa Services",
+        "desc": "30 or 60-day tourist visas, multiple-entry options, and fast in-country legal visa extensions."
+      },
+      "hotels": {
+        "title": "Luxury Hotels & Palaces",
+        "desc": "Exclusive guaranteed rates at world-class 5-star hotels, beachfront resorts, and luxury hotel apartments."
+      },
+      "flights": {
+        "title": "Flight Bookings & Charters",
+        "desc": "Commercial flights, Business & First Class privileges, and private charter flight arrangements."
+      },
+      "cars": {
+        "title": "Luxury Cars & Chauffeur",
+        "desc": "Exotic supercars, luxury SUVs, executive sedans, and bilingual private chauffeur services."
+      },
+      "tourism": {
+        "title": "VIP Tours & Experiences",
+        "desc": "Private desert safaris, luxury yacht charters, helicopter skyline tours, and VIP access passes."
+      },
+      "realEstate": {
+        "title": "Prime Real Estate & Investment",
+        "desc": "Golden Visa acquisitions, high-yield buy-to-let properties, luxury rentals, and exclusive off-plan launches."
+      }
+    },
+    "visaOptions": {
+      "1month": "30-Day Single Entry Tourist Visa",
+      "2months": "60-Day Single Entry Tourist Visa",
+      "multi": "Multiple-Entry Visa (Tourism & Business)",
+      "extend": "In-Country Visa Extension (Without Leaving UAE)"
+    },
+    "hotelOptions": {
+      "luxury": "5-Star Palaces & Ultra-Luxury Resorts",
+      "business": "4-5 Star Executive & City Center Hotels",
+      "suite": "Premium Hotel Apartments & Family Suites",
+      "resort": "Beachfront Villas & Private Desert Resorts"
+    },
+    "flightOptions": {
+      "business": "Business & First Class Reservations",
+      "economy": "Economy & Premium Economy Flights",
+      "charter": "Private Aviation & VIP Charter Flights"
+    },
+    "carOptions": {
+      "daily": "Daily Rental (Exotic Supercars & Sports)",
+      "weekly": "Weekly Rental (Luxury SUVs & Sedans)",
+      "monthly": "Monthly Corporate Lease (Long-Term VIP)",
+      "chauffeur": "Private Chauffeur Service with Vehicle"
+    },
+    "tourismOptions": {
+      "safari": "VIP Private Desert Safari with Gourmet Dinner",
+      "cityTour": "Private Guided Dubai & Abu Dhabi Tour",
+      "yacht": "Luxury Yacht Rental & Dubai Marina Cruise",
+      "helicopter": "Helicopter Skyline Flight Experience",
+      "tickets": "VIP Burj Khalifa & Major Attractions Passes"
+    },
+    "realEstateOptions": {
+      "buyVilla": "Luxury Villa Purchase / Golden Visa",
+      "buyApartment": "Prime Luxury Apartment Purchase / Investment",
+      "annualRent": "High-End Annual Residential Lease",
+      "holidayHome": "Short-Term Luxury Holiday Home Rentals",
+      "offPlan": "New Off-Plan Developer Launches"
+    },
+    "fullName": "Full Name",
+    "country": "Country of Residence",
+    "phone": "Phone / WhatsApp Number",
+    "email": "Email Address",
+    "travelDate": "Expected Arrival Date",
+    "travelers": "Number of Travelers / Guests",
+    "rentalDuration": "Requested Rental Duration",
+    "propertyType": "Property Type",
+    "dubaiArea": "Preferred Dubai Location",
+    "budget": "Estimated Budget (AED or USD)",
+    "bedrooms": "Number of Bedrooms",
+    "message": "Specific Preferences & Notes",
+    "form": {
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "e.g. David Miller",
+      "country": "Country of Residence",
+      "countryPlaceholder": "e.g. United Kingdom, USA, Canada...",
+      "phoneWhatsapp": "Phone / WhatsApp Number",
+      "phonePlaceholder": "+971 50 123 4567",
+      "email": "Email Address",
+      "emailPlaceholder": "david.miller@example.com",
+      "service": "Selected Service",
+      "subService": "Selected Option",
+      "propertyType": "Property Type",
+      "dubaiArea": "Preferred Area in Dubai",
+      "budget": "Estimated Budget",
+      "bedrooms": "Number of Bedrooms",
+      "rentalDuration": "Rental Duration",
+      "travelDate": "Expected Travel Date",
+      "travelers": "Number of Travelers",
+      "message": "Additional Comments or Message",
+      "messagePlaceholder": "Tell us about your travel dates, preferences, or any customized requirements..."
+    },
+    "propertyTypes": {
+      "apartment": "Luxury Apartment",
+      "villa": "Standalone Villa",
+      "penthouse": "Panoramic Penthouse",
+      "townhouse": "Modern Townhouse",
+      "commercial": "Commercial Office / Retail"
+    },
+    "bedroomOptions": {
+      "1": "1 Bedroom",
+      "2": "2 Bedrooms",
+      "3": "3 Bedrooms",
+      "studio": "Studio",
+      "4plus": "4+ Bedrooms"
+    },
+    "validation": {
+      "required": "This field is required to process your request",
+      "invalidEmail": "Please enter a valid email address",
+      "invalidPhone": "Please enter a valid international phone number"
+    },
+    "back": "Previous Step",
+    "next": "Next Step",
+    "submit": "Submit Quote Request",
+    "submitting": "Submitting request...",
+    "successTitle": "Quote Request Submitted Successfully!",
+    "successMessage": "Thank you for contacting us. A dedicated AYMEN DUBAI TOURISME specialist is reviewing your inquiry and will reach out shortly with a bespoke quote.",
+    "service": "Requested Service",
+    "subService": "Selected Option",
+    "name": "Applicant",
+    "sendWhatsapp": "Continue on WhatsApp",
+    "newRequest": "Submit Another Request",
+    "confirmation": "Your quote request has been sent successfully. Our team will contact you shortly.",
+    "whatsappButton": "Request via WhatsApp"
+  },
+  "Footer": {
+    "description": "AYMEN DUBAI TOURISME is your premier partner for travel, tourism, and real estate services in Dubai.",
+    "quickLinks": "Quick Links",
+    "services": "Our Services",
+    "contact": "Contact",
+    "contactInfo": "Contact Information",
+    "copyright": "© 2026 AYMEN DUBAI TOURISME. Tous droits réservés.",
+    "allRightsReserved": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions",
+    "cookies": "Cookie Policy"
+  },
+  "Common": {
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "e.g. David Miller",
+      "email": "Email Address",
+      "emailPlaceholder": "david.miller@example.com",
+      "phone": "Phone / WhatsApp Number",
+      "phonePlaceholder": "+971 50 123 4567",
+      "country": "Country of Residence",
+      "countryPlaceholder": "e.g. United Kingdom, USA...",
+      "message": "Your Message",
+      "messagePlaceholder": "Tell us how we can assist you with your Dubai journey...",
+      "submit": "Submit Inquiry",
+      "cancel": "Cancel",
+      "required": "Required field"
+    },
+    "buttons": {
+      "learnMore": "Learn More",
+      "getQuote": "Get a Quote",
+      "contactUs": "Contact Us",
+      "submit": "Submit Request",
+      "cancel": "Cancel",
+      "close": "Close",
+      "back": "Back",
+      "next": "Next",
+      "viewAll": "View All",
+      "loadMore": "Load More"
+    },
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "getQuote": "Get a Quote",
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading...",
+    "error": "An error occurred. Please try again later.",
+    "success": "Operation successful!"
+  },
+  "Admin": {
+    "dashboard": "Admin Dashboard",
+    "login": "Admin Login",
+    "sidebar": {
+      "overview": "Overview",
+      "quotes": "Quotes",
+      "reviews": "Reviews",
+      "properties": "Properties",
+      "settings": "Settings"
+    },
+    "stats": {
+      "totalQuotes": "Total Quotes",
+      "pendingRequests": "Pending Requests",
+      "activeProperties": "Active Properties"
+    },
+    "table": {
+      "id": "ID",
+      "date": "Date",
+      "name": "Name",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save Changes"
+    }
+  },
+  "Legal": {
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions"
+  },
+  "Language": {
+    "en": "English",
+    "ar": "العربية",
+    "fr": "Français"
+  }
+}

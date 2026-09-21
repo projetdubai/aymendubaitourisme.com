@@ -1,0 +1,62 @@
+[
+  {
+    "id": "R-001",
+    "name": "Mohammed Al-Rashid",
+    "country": "Saudi Arabia 🇸🇦",
+    "rating": 5,
+    "text": "AYMEN DUBAI TOURISME provided excellent visa services. The process was smooth, fast, and highly professional. Highly recommended!",
+    "date": "2023-10-15",
+    "service": "Visa Services",
+    "status": "approved"
+  },
+  {
+    "id": "R-002",
+    "name": "Marie Dupont",
+    "country": "France 🇫🇷",
+    "rating": 5,
+    "text": "They found the perfect luxury hotel for our anniversary trip. The exclusive perks and seamless booking made our stay unforgettable.",
+    "date": "2023-11-02",
+    "service": "Hotel Booking",
+    "status": "approved"
+  },
+  {
+    "id": "R-003",
+    "name": "Ahmed Benali",
+    "country": "Algeria 🇩🇿",
+    "rating": 5,
+    "text": "A complete tourism experience that exceeded all expectations. From arrival to departure, everything was meticulously planned.",
+    "date": "2023-12-10",
+    "service": "Tourism Packages",
+    "status": "approved"
+  },
+  {
+    "id": "R-004",
+    "name": "Sarah Johnson",
+    "country": "United Kingdom 🇬🇧",
+    "rating": 4,
+    "text": "Very helpful in our search for a Dubai property. They showed us great options in Dubai Marina and handled the paperwork efficiently.",
+    "date": "2024-01-22",
+    "service": "Real Estate",
+    "status": "approved"
+  },
+  {
+    "id": "R-005",
+    "name": "Fatima El-Moussa",
+    "country": "Lebanon 🇱🇧",
+    "rating": 5,
+    "text": "Rented a luxury car for the weekend. The vehicle was in pristine condition and the delivery to our hotel was prompt.",
+    "date": "2024-02-14",
+    "service": "Car Rental",
+    "status": "approved"
+  },
+  {
+    "id": "R-006",
+    "name": "Karim Cherif",
+    "country": "Tunisia 🇹🇳",
+    "rating": 5,
+    "text": "Exceptional overall service! Their team is dedicated, responsive, and truly cares about their clients' experience in Dubai.",
+    "date": "2024-03-05",
+    "service": "Concierge Services",
+    "status": "approved"
+  }
+]

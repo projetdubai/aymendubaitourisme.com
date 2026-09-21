@@ -1,0 +1,22 @@
+[
+  {
+    "id": "ver_initial",
+    "version": "v1.0.0",
+    "createdAt": "2026-09-18T12:00:00.000Z",
+    "author": "Aymen Boulabeiz",
+    "note": "Version initiale stable du site Aymen Dubai Tourisme",
+    "isActive": true,
+    "snapshot": {
+      "sections": [
+        { "id": "hero", "name": "Bannière Hero", "enabled": true, "order": 0 },
+        { "id": "services", "name": "Nos 7 Services Clés", "enabled": true, "order": 1 },
+        { "id": "extra-services", "name": "Services Visas & Régionaux", "enabled": true, "order": 2 },
+        { "id": "founder", "name": "Mot du Fondateur", "enabled": true, "order": 3 },
+        { "id": "why-us", "name": "Pourquoi Nous Choisir", "enabled": true, "order": 4 },
+        { "id": "real-estate", "name": "Immobilier de Prestige", "enabled": true, "order": 5 },
+        { "id": "reviews", "name": "Avis Clients", "enabled": true, "order": 6 },
+        { "id": "contact", "name": "Formulaire de Contact", "enabled": true, "order": 7 }
+      ]
+    }
+  }
+]

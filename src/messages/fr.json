@@ -1,0 +1,471 @@
+{
+  "Metadata": {
+    "title": "AYMEN DUBAI TOURISME | Votre Partenaire Voyage & Immobilier d'Excellence",
+    "description": "Services touristiques haut de gamme à Dubaï : visas, réservation d'hôtels, billetterie d'avion, location de voitures et immobilier de prestige aux Émirats arabes unis."
+  },
+  "Navigation": {
+    "home": "Accueil",
+    "services": "Services",
+    "visa": "Visas",
+    "hotels": "Hôtels",
+    "flights": "Vols",
+    "cars": "Voitures",
+    "realEstate": "Immobilier",
+    "reviews": "Avis",
+    "contact": "Contact",
+    "getQuote": "Demander un Devis",
+    "whatsappMessage": "Bonjour, je souhaite obtenir des informations sur vos services à Dubaï.",
+    "whatsappNumber": "+971543770253"
+  },
+  "Hero": {
+    "headline": "Découvrez Dubaï. Nous facilitons votre voyage.",
+    "subtitle": "Vivez le meilleur de Dubaï avec AYMEN DUBAI TOURISME. De l'obtention de vos visas et réservations d'hôtels à la location de véhicules de luxe, activités touristiques et investissements immobiliers, nous vous offrons des solutions sur mesure d'exception.",
+    "ctaPrimary": "Demander un Devis Gratuit",
+    "ctaSecondary": "Explorer nos Services",
+    "badge": "Premium Travel & Hospitality",
+    "whatsappNumber": "+971543770253"
+  },
+  "Services": {
+    "title": "Nos Services",
+    "subtitle": "Des solutions complètes pour sublimer votre séjour et vos projets à Dubaï.",
+    "dubaiVisa": {
+      "title": "Services de Visa Dubaï",
+      "description": "Visas touristiques rapides et garantis pour Dubaï : formules 1 mois, 2 mois et entrées multiples adaptées à votre séjour."
+    },
+    "visaExtension": {
+      "title": "Extension de Visa",
+      "description": "Prolongez facilement votre séjour à Dubaï grâce à nos services d'extension légale sur place sans quitter le pays."
+    },
+    "hotelBooking": {
+      "title": "Réservation d'Hôtels",
+      "description": "Trouvez l'hébergement de vos rêves aux meilleurs tarifs négociés, des résidences confortables aux palaces 5 étoiles."
+    },
+    "flightBooking": {
+      "title": "Réservation de Vols",
+      "description": "Bénéficiez des meilleurs tarifs aériens à destination et au départ de Dubaï avec nos services de billetterie réactifs."
+    },
+    "carRental": {
+      "title": "Location de Voitures",
+      "description": "Explorez les Émirats en toute liberté grâce à nos formules de location journalières, hebdomadaires et mensuelles."
+    },
+    "tourism": {
+      "title": "Services Touristiques aux EAU",
+      "description": "Découvrez les trésors des Émirats avec nos excursions guidées, safaris exclusifs dans le désert et pass attractions VIP."
+    },
+    "realEstate": {
+      "title": "Immobilier de Prestige",
+      "description": "Votre partenaire de confiance sur le marché immobilier de Dubaï : location, vente, appartements et villas sur plan ou prêts à emménager."
+    }
+  },
+  "ExtraServices": {
+    "title": "Services Complémentaires",
+    "subtitle": "Nous vous offrons une gamme complète de services pour faciliter votre voyage",
+    "qatarVisa": {
+      "title": "🇶🇦 Visa Qatar",
+      "description": "Soumission et suivi des demandes de visa pour le Qatar"
+    },
+    "omanVisa": {
+      "title": "🇴🇲 Visa Oman",
+      "description": "Visas touristiques et services de demande pour le Sultanat d'Oman"
+    },
+    "saudiVisa": {
+      "title": "🇸🇦 Visa Arabie Saoudite",
+      "description": "Services de visas touristiques pour le Royaume d'Arabie Saoudite"
+    },
+    "flightBooking": {
+      "title": "✈️ Réservation de Vols",
+      "description": "Vols internationaux | Aller-retour | Recherche des meilleures options"
+    },
+    "hotelBooking": {
+      "title": "🏨 Réservation d'Hôtels",
+      "description": "Hôtels à Dubaï et aux Émirats | Réservations aux meilleurs prix"
+    },
+    "carRental": {
+      "title": "🚗 Location de Voitures à Dubaï",
+      "description": "Voitures de luxe et économiques | Location journalière, hebdomadaire et mensuelle"
+    },
+    "travelServices": {
+      "title": "📄 Services de Voyage et Tourisme",
+      "description": "Programmes touristiques complets | Excursions à Dubaï et aux Émirats | Services VIP"
+    },
+    "cta": "Réserver Maintenant",
+    "whatsappCta": "Contacter via WhatsApp"
+  },
+  "WhyChooseUs": {
+    "title": "Pourquoi Choisir AYMEN DUBAI TOURISME",
+    "professionalService": {
+      "title": "Service Professionnel & VIP",
+      "description": "Une équipe expérimentée et rigoureuse vous accompagne avec exigence à chaque étape de votre voyage."
+    },
+    "fastResponse": {
+      "title": "Réactivité Immédiate",
+      "description": "Nous répondons sans délai à vos demandes avec un traitement rapide via WhatsApp et téléphone."
+    },
+    "expertise": {
+      "title": "Expertise Locale Reconnue",
+      "description": "Bénéficiez d'une parfaite maîtrise du terrain et d'un réseau solide à Dubaï et aux Émirats."
+    },
+    "personalized": {
+      "title": "Accompagnement Personnalisé",
+      "description": "Des formules sur mesure conçues selon vos préférences personnelles, familiales ou professionnelles."
+    },
+    "transparent": {
+      "title": "Transparence Totale",
+      "description": "Des tarifs clairs et négociés, sans aucun frais caché ni mauvaise surprise à l'arrivée."
+    },
+    "completeSolutions": {
+      "title": "Solutions Clés en Main",
+      "description": "Du visa d'entrée au logement de rêve, nous prenons en charge l'ensemble de vos besoins sous un même toit."
+    }
+  },
+  "RealEstate": {
+    "headline": "Trouvez Votre Prochain Bien Immobilier à Dubaï",
+    "subheadline": "Découvrez notre sélection exclusive de résidences et opportunités d'investissement d'exception à Dubaï.",
+    "filters": {
+      "all": "Tous",
+      "rent": "Location",
+      "buy": "Achat",
+      "allTypes": "Tous Types",
+      "apartments": "Appartements",
+      "villas": "Villas",
+      "commercial": "Commercial",
+      "furnished": "Meublé",
+      "unfurnished": "Non Meublé",
+      "ready": "Prêt à emménager",
+      "offPlan": "Sur Plan"
+    },
+    "types": {
+      "all": "Tous Types",
+      "apartments": "Appartements",
+      "villas": "Villas",
+      "commercial": "Commercial"
+    },
+    "card": {
+      "bedrooms": "Chambres",
+      "bathrooms": "Salles de bain",
+      "sqft": "Pi²",
+      "area": "Superficie"
+    },
+    "purpose": {
+      "buy": "Achat",
+      "rent": "Location"
+    },
+    "furnishing": {
+      "furnished": "Meublé",
+      "unfurnished": "Non Meublé"
+    },
+    "price": "Prix de Vente",
+    "rent": "Loyer Annuel",
+    "viewAll": "Consulter Toutes Nos Propriétés"
+  },
+  "Reviews": {
+    "title": "Témoignages & Avis Clients",
+    "subtitle": "Découvrez l'expérience vécue par nos clients privilégiés ayant fait appel à nos prestations à Dubaï.",
+    "leaveReview": "Partager Votre Expérience",
+    "leaveReviewTitle": "Rédiger un Avis Client",
+    "rating": "Votre Note Globale",
+    "reviewText": "Votre Avis Détaillé",
+    "reviewPlaceholder": "Faites part de votre appréciation sur nos services (accueil, ponctualité, réactivité, qualité de prise en charge)...",
+    "uploadPhoto": "Ajouter une photo souvenir (Optionnel)",
+    "moderationNotice": "Votre avis sera vérifié par notre équipe éditoriale avant sa mise en ligne afin de garantir l'authenticité des retours d'expérience.",
+    "form": {
+      "name": "Nom et Prénom",
+      "namePlaceholder": "Ex. Sophie Laurent",
+      "country": "Pays ou Ville de Résidence",
+      "countryPlaceholder": "Ex. France, Suisse, Belgique, Algérie...",
+      "rating": "Note d'évaluation",
+      "review": "Votre Témoignage",
+      "photo": "Télécharger une photo (optionnel)"
+    },
+    "success": "Merci infiniment pour votre contribution ! Votre témoignage sera publié dès sa validation par notre équipe.",
+    "sample": {
+      "one": "Service irréprochable ! Obtention du visa et réservation de l'hôtel réalisées avec une efficacité remarquable.",
+      "two": "Je recommande vivement AYMEN DUBAI TOURISME pour l'investissement immobilier et les séjours à Dubaï. Très professionnels."
+    }
+  },
+  "Contact": {
+    "title": "Contactez Notre Conciergerie VIP",
+    "subtitle": "Notre équipe basée à Dubaï est à votre entière disposition 7j/7 pour vous conseiller et concevoir un séjour sur mesure.",
+    "phone": {
+      "title": "Ligne Téléphonique Directe",
+      "action": "Appeler un Conseiller"
+    },
+    "whatsapp": {
+      "title": "Assistance WhatsApp 24/7",
+      "action": "Échanger sur WhatsApp"
+    },
+    "email": {
+      "title": "Correspondance Email",
+      "action": "Envoyer un Courriel"
+    },
+    "form": {
+      "title": "Formulaire de Contact Direct",
+      "name": "Nom et Prénom",
+      "namePlaceholder": "Ex. Alexandre Martin",
+      "email": "Adresse Email Professionnelle ou Personnelle",
+      "emailPlaceholder": "alexandre.martin@example.com",
+      "phone": "Numéro de Téléphone / WhatsApp",
+      "phonePlaceholder": "+971 50 123 4567",
+      "message": "Détails de votre demande ou projet",
+      "messagePlaceholder": "Décrivez votre projet, vos dates souhaitées, vos exigences particulières ou toute information utile...",
+      "send": "Transmettre mon Message",
+      "sending": "Envoi du message en cours...",
+      "successTitle": "Message Transmis avec Succès",
+      "success": "Merci pour votre message. Un conseiller dédié d'AYMEN DUBAI TOURISME prendra contact avec vous dans les plus brefs délais."
+    },
+    "info": {
+      "address": "Adresse",
+      "email": "Email",
+      "phone": "Téléphone",
+      "social": "Rejoignez-Nous sur nos Réseaux Sociaux"
+    },
+    "followUs": "Rejoignez-nous sur nos réseaux sociaux"
+  },
+  "QuotePage": {
+    "title": "Demande de Devis Personnalisé",
+    "subtitle": "Sélectionnez vos prestations afin de recevoir une proposition tarifaire détaillée et adaptée à vos attentes sous 24h.",
+    "metaTitle": "Demander un Devis - AYMEN DUBAI TOURISME",
+    "metaDescription": "Obtenez un devis gratuit et rapide pour vos visas Dubaï, réservations d'hôtels, vols, location de voitures et projets immobiliers."
+  },
+  "Quote": {
+    "title": "Demande de Devis Personnalisé",
+    "subtitle": "Un accompagnement sur mesure pour tous vos besoins de séjour et d'investissement à Dubaï.",
+    "step1": "1. Sélection du Service",
+    "step2": "2. Formule & Options",
+    "step3": "3. Coordonnées & Précisions",
+    "step4": "4. Confirmation",
+    "selectService": "Sélectionnez votre prestation principale",
+    "steps": {
+      "one": "Choisir le Service",
+      "two": "Détails de la Demande",
+      "three": "Coordonnées"
+    },
+    "selectOption": "Sélectionnez l'option correspondant à votre projet",
+    "services": {
+      "visa": {
+        "title": "Visas Émirats Arabes Unis",
+        "desc": "Visas touristiques 30 ou 60 jours, entrées multiples et prolongations légales sur place sans quitter le pays."
+      },
+      "hotels": {
+        "title": "Hôtels & Palaces de Prestige",
+        "desc": "Réservations exclusives au meilleur tarif garanti : palaces 5 étoiles, resorts bord de mer et appart-hôtels."
+      },
+      "flights": {
+        "title": "Billetterie Aérienne",
+        "desc": "Vols réguliers, réservations classe affaires et première classe avec assistance aéroportuaire prioritaire."
+      },
+      "cars": {
+        "title": "Location de Véhicules & Chauffeur",
+        "desc": "Supercars, SUV de prestige et berlines luxueuses avec ou sans chauffeur privé bilingue."
+      },
+      "tourism": {
+        "title": "Excursions & Expériences VIP",
+        "desc": "Safaris dans les dunes privatisés, yachts de luxe, vols en hélicoptère et accès coupe-file aux monuments."
+      },
+      "realEstate": {
+        "title": "Immobilier de Luxe & Investissement",
+        "desc": "Acquisitions de prestige, investissements locatifs à fort rendement, résidences meublées et projets sur plan."
+      }
+    },
+    "visaOptions": {
+      "1month": "Visa Touristique 30 Jours (Entrée Simple)",
+      "2months": "Visa Touristique 60 Jours (Entrée Simple)",
+      "multi": "Visa Entrées Multiples (Tourisme & Affaires)",
+      "extend": "Prolongation de Visa sur place (Sans quitter les Émirats)"
+    },
+    "hotelOptions": {
+      "luxury": "Palaces & Hôtels 5 Étoiles Luxe",
+      "business": "Hôtels 4-5 Étoiles & Emplacement Stratégique",
+      "suite": "Appart-Hôtels & Suites Familiales",
+      "resort": "Resorts Bord de Mer & Villas Privées"
+    },
+    "flightOptions": {
+      "business": "Classe Affaires & Première Classe",
+      "economy": "Classe Économique & Premium Economy",
+      "charter": "Aviation Privée & Vols Charters Exclusifs"
+    },
+    "carOptions": {
+      "daily": "Location Journalière (Supercars & Sportives)",
+      "weekly": "Location Hebdomadaire (SUV & Berlines Luxe)",
+      "monthly": "Location Mensuelle Corporate (Longue Durée)",
+      "chauffeur": "Service Chauffeur Privé VIP Dédié"
+    },
+    "tourismOptions": {
+      "safari": "Safari VIP dans le Désert & Dîner Privé",
+      "cityTour": "Visite Guidée Privée de Dubaï & Abu Dhabi",
+      "yacht": "Location de Yacht Privé & Croisière Marina",
+      "helicopter": "Survol Panoramique en Hélicoptère",
+      "tickets": "Accès VIP Burj Khalifa & Attractions Majeures"
+    },
+    "realEstateOptions": {
+      "buyVilla": "Achat Villa de Luxe / Golden Visa",
+      "buyApartment": "Achat Appartement de Prestige / Investissement",
+      "annualRent": "Location Annuelle Haut de Gamme",
+      "holidayHome": "Location Saisonnière (Holiday Homes VIP)",
+      "offPlan": "Projets Neufs & Lancements Promoteurs (Off-Plan)"
+    },
+    "fullName": "Nom et Prénom",
+    "country": "Pays de Résidence",
+    "phone": "Numéro de Téléphone / WhatsApp",
+    "email": "Adresse Email Professionnelle ou Personnelle",
+    "travelDate": "Date d'Arrivée Prévue",
+    "travelers": "Nombre de Voyageurs / Personnes",
+    "rentalDuration": "Durée Souhaitée de Location",
+    "propertyType": "Type de Propriété Recherchée",
+    "dubaiArea": "Quartier Préféré à Dubaï",
+    "budget": "Budget Estimé (AED ou EUR)",
+    "bedrooms": "Nombre de Chambres",
+    "message": "Précisions & Demandes Particulières",
+    "form": {
+      "fullName": "Nom et Prénom",
+      "fullNamePlaceholder": "Ex. Alexandre Martin",
+      "country": "Pays de Résidence",
+      "countryPlaceholder": "Ex. France, Belgique, Suisse, Algérie, Maroc...",
+      "phoneWhatsapp": "Numéro de Téléphone / WhatsApp",
+      "phonePlaceholder": "+33 6 12 34 56 78",
+      "email": "Adresse Email Professionnelle ou Personnelle",
+      "emailPlaceholder": "alexandre.martin@example.com",
+      "service": "Service Sélectionné",
+      "subService": "Option Choisie",
+      "propertyType": "Type de Propriété",
+      "dubaiArea": "Quartier Souhaité à Dubaï",
+      "budget": "Budget Estimé",
+      "bedrooms": "Nombre de Chambres",
+      "rentalDuration": "Durée de Location",
+      "travelDate": "Date d'Arrivée Prévue",
+      "travelers": "Nombre de Voyageurs",
+      "message": "Précisions ou demandes particulières",
+      "messagePlaceholder": "Indiquez vos préférences, dates flexibles, besoins particuliers..."
+    },
+    "propertyTypes": {
+      "apartment": "Appartement de standing",
+      "villa": "Villa individuelle",
+      "penthouse": "Penthouse vue panoramique",
+      "townhouse": "Townhouse moderne",
+      "commercial": "Bureau ou espace commercial"
+    },
+    "bedroomOptions": {
+      "1": "1 Chambre",
+      "2": "2 Chambres",
+      "3": "3 Chambres",
+      "studio": "Studio",
+      "4plus": "4 Chambres ou plus"
+    },
+    "validation": {
+      "required": "Ce champ est obligatoire pour traiter votre demande",
+      "invalidEmail": "Veuillez entrer une adresse email valide",
+      "invalidPhone": "Veuillez entrer un numéro de téléphone international valide"
+    },
+    "back": "Étape Précédente",
+    "next": "Étape Suivante",
+    "submit": "Transmettre ma Demande de Devis",
+    "submitting": "Transmission en cours...",
+    "successTitle": "Demande de Devis Transmise avec Succès !",
+    "successMessage": "Nous vous remercions pour votre démarche. Un conseiller dédié d'AYMEN DUBAI TOURISME étudie actuellement votre requête et prendra contact avec vous dans les plus brefs délais avec une proposition chiffrée.",
+    "service": "Prestation demandée",
+    "subService": "Option sélectionnée",
+    "name": "Demandeur",
+    "sendWhatsapp": "Poursuivre & Échanger sur WhatsApp",
+    "newRequest": "Effectuer une Autre Demande",
+    "confirmation": "Votre demande de devis a été envoyée avec succès. Notre équipe vous contactera dans les plus brefs délais.",
+    "whatsappButton": "Envoyer via WhatsApp"
+  },
+  "Footer": {
+    "description": "AYMEN DUBAI TOURISME est votre agence de référence pour vos voyages, séjours touristiques et projets immobiliers à Dubaï.",
+    "quickLinks": "Liens Rapides",
+    "services": "Nos Services",
+    "contact": "Contact",
+    "contactInfo": "Informations de Contact",
+    "copyright": "© 2026 AYMEN DUBAI TOURISME. Tous droits réservés.",
+    "allRightsReserved": "Tous droits réservés.",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions Générales",
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsConditions": "Conditions Générales",
+    "cookies": "Politique des Cookies",
+    "phone": "+971 54 377 0253",
+    "whatsapp": "+971543770253",
+    "email": "Aymenboulabeiz8@gmail.com",
+    "address": "Downtown Dubai, United Arab Emirates",
+    "instagram": "https://www.instagram.com/aymendubaitourism",
+    "tiktok": "https://tiktok.com/@aymen_dubai_tourisme",
+    "snapchat": "https://www.snapchat.com/add/aymen.dubai",
+    "facebook": "https://www.facebook.com/share/1DLTwAnENA/",
+    "youtube": "https://youtube.com/@aymendubaitourisme"
+  },
+  "Common": {
+    "form": {
+      "name": "Nom et Prénom",
+      "namePlaceholder": "Ex. Alexandre Martin",
+      "email": "Adresse Email",
+      "emailPlaceholder": "alexandre.martin@example.com",
+      "phone": "Numéro de Téléphone / WhatsApp",
+      "phonePlaceholder": "+971 50 123 4567",
+      "country": "Pays de Résidence",
+      "countryPlaceholder": "Ex. France, Suisse, Algérie, Maroc...",
+      "message": "Votre Message",
+      "messagePlaceholder": "Expliquez-nous votre projet ou vos besoins spécifiques...",
+      "submit": "Transmettre la Demande",
+      "cancel": "Annuler",
+      "required": "Champ obligatoire"
+    },
+    "buttons": {
+      "learnMore": "En savoir plus",
+      "getQuote": "Demander un Devis",
+      "contactUs": "Contactez-nous",
+      "submit": "Valider la Demande",
+      "cancel": "Annuler",
+      "close": "Fermer",
+      "back": "Retour",
+      "next": "Suivant",
+      "viewAll": "Tout Voir",
+      "loadMore": "Charger Plus"
+    },
+    "cancel": "Annuler",
+    "submit": "Valider",
+    "getQuote": "Demander un Devis",
+    "back": "Retour",
+    "next": "Suivant",
+    "loading": "Chargement en cours...",
+    "error": "Une erreur est survenue. Veuillez réessayer plus tard.",
+    "success": "Opération effectuée avec succès !"
+  },
+  "Admin": {
+    "dashboard": "Tableau de Bord Administrateur",
+    "login": "Connexion Administrateur",
+    "sidebar": {
+      "overview": "Aperçu",
+      "quotes": "Demandes de Devis",
+      "reviews": "Avis Clients",
+      "properties": "Biens Immobiliers",
+      "settings": "Paramètres"
+    },
+    "stats": {
+      "totalQuotes": "Total Devis",
+      "pendingRequests": "En Attente",
+      "activeProperties": "Propriétés Actives"
+    },
+    "table": {
+      "id": "ID",
+      "date": "Date",
+      "name": "Nom",
+      "status": "Statut",
+      "actions": "Actions"
+    },
+    "actions": {
+      "view": "Détails",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "save": "Enregistrer"
+    }
+  },
+  "Legal": {
+    "privacyPolicy": "Politique de Confidentialité",
+    "termsConditions": "Conditions Générales"
+  },
+  "Language": {
+    "en": "English",
+    "ar": "العربية",
+    "fr": "Français"
+  }
+}

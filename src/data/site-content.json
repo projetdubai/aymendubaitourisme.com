@@ -1,0 +1,130 @@
+{
+  "general": {
+    "siteName": "AYMEN DUBAI TOURISME",
+    "tagline": "Premium Travel & Hospitality",
+    "phone": "+971 54 377 0253",
+    "whatsapp": "+971543770253",
+    "email": "Aymenboulabeiz8@gmail.com",
+    "address": "Downtown Dubai, United Arab Emirates",
+    "copyright": "© 2026 AYMEN DUBAI TOURISME. Tous droits réservés."
+  },
+  "sections": [
+    { "id": "hero", "name": "Bannière Hero", "enabled": true, "order": 0 },
+    { "id": "services", "name": "Nos 7 Services Clés", "enabled": true, "order": 1 },
+    { "id": "extra-services", "name": "Services Visas & Régionaux", "enabled": true, "order": 2 },
+    { "id": "founder", "name": "Mot du Fondateur", "enabled": true, "order": 3 },
+    { "id": "why-us", "name": "Pourquoi Nous Choisir", "enabled": true, "order": 4 },
+    { "id": "real-estate", "name": "Immobilier de Prestige", "enabled": true, "order": 5 },
+    { "id": "reviews", "name": "Avis Clients", "enabled": true, "order": 6 },
+    { "id": "faq", "name": "Foire Aux Questions (FAQ)", "enabled": true, "order": 7 },
+    { "id": "promo", "name": "Offre Spéciale & Bannière Promo", "enabled": false, "order": 8 },
+    { "id": "contact", "name": "Formulaire de Contact & Coordonnées", "enabled": true, "order": 9 }
+  ],
+  "navbar": [
+    { "id": "nav-home", "href": "/", "labelFr": "Accueil", "labelAr": "الرئيسية", "labelEn": "Home", "enabled": true, "order": 0 },
+    { "id": "nav-services", "href": "/services", "labelFr": "Services", "labelAr": "الخدمات", "labelEn": "Services", "enabled": true, "order": 1 },
+    { "id": "nav-visa", "href": "/visa", "labelFr": "Visas", "labelAr": "التأشيرات", "labelEn": "Visa", "enabled": true, "order": 2 },
+    { "id": "nav-hotels", "href": "/hotels", "labelFr": "Hôtels", "labelAr": "الفنادق", "labelEn": "Hotels", "enabled": true, "order": 3 },
+    { "id": "nav-flights", "href": "/flights", "labelFr": "Vols", "labelAr": "الرحلات الجوية", "labelEn": "Flights", "enabled": true, "order": 4 },
+    { "id": "nav-cars", "href": "/cars", "labelFr": "Voitures", "labelAr": "السيارات", "labelEn": "Cars", "enabled": true, "order": 5 },
+    { "id": "nav-real-estate", "href": "/real-estate", "labelFr": "Immobilier", "labelAr": "العقارات", "labelEn": "Real Estate", "enabled": true, "order": 6 },
+    { "id": "nav-reviews", "href": "/reviews", "labelFr": "Avis Clients", "labelAr": "التقييمات", "labelEn": "Reviews", "enabled": true, "order": 7 },
+    { "id": "nav-contact", "href": "/contact", "labelFr": "Contact", "labelAr": "اتصل بنا", "labelEn": "Contact", "enabled": true, "order": 8 }
+  ],
+  "socials": {
+    "instagram": "https://www.instagram.com/aymendubaitourism",
+    "tiktok": "https://tiktok.com/@aymen_dubai_tourisme",
+    "snapchat": "https://www.snapchat.com/add/aymen.dubai",
+    "facebook": "https://www.facebook.com/share/1DLTwAnENA/",
+    "youtube": "https://youtube.com/@aymendubaitourisme"
+  },
+  "hero": {
+    "badge": "Services Touristiques & Hospitalité de Luxe",
+    "title": "Découvrez Dubaï. Nous facilitons votre voyage.",
+    "subtitle": "Spécialiste agréé pour vos Visas Dubaï, réservations d'hôtels de luxe, vols internationaux, location de voitures de prestige et investissements immobiliers aux Émirats Arabes Unis."
+  },
+  "services": [
+    {
+      "id": "srv-1",
+      "slug": "visa",
+      "title": "Visas Touristiques & Séjour Dubaï",
+      "category": "Visa",
+      "price": "À partir de 450 AED",
+      "description": "Obtention rapide de visas 30 jours, 60 jours ou entrées multiples avec prise en charge complète.",
+      "active": true
+    },
+    {
+      "id": "srv-2",
+      "slug": "visa-extension",
+      "title": "Prolongation de Visa aux EAU",
+      "category": "Visa",
+      "price": "À partir de 650 AED",
+      "description": "Renouvellement et extension de séjour sans quitter le territoire des Émirats.",
+      "active": true
+    },
+    {
+      "id": "srv-3",
+      "slug": "hotels",
+      "title": "Réservation d'Hôtels de Prestige",
+      "category": "Hôtellerie",
+      "price": "Tarifs négociés VIP",
+      "description": "Sélection d'hôtels 5 étoiles et resorts exclusifs à Downtown, Dubai Marina et Palm Jumeirah.",
+      "active": true
+    },
+    {
+      "id": "srv-4",
+      "slug": "flights",
+      "title": "Billetterie & Vols Internationaux",
+      "category": "Aérien",
+      "price": "Meilleurs tarifs garantis",
+      "description": "Réservation de billets d'avion avec Emirates et grandes compagnies en classe éco, affaires ou première.",
+      "active": true
+    },
+    {
+      "id": "srv-5",
+      "slug": "cars",
+      "title": "Location de Voitures de Luxe & Berlines",
+      "category": "Véhicules",
+      "price": "Journalier, hebdo ou mensuel",
+      "description": "Flotte exclusive : SUV de luxe, berlines avec chauffeur, sportives et véhicules de confort.",
+      "active": true
+    },
+    {
+      "id": "srv-6",
+      "slug": "real-estate",
+      "title": "Immobilier : Achat & Location Dubaï",
+      "category": "Immobilier",
+      "price": "Consultation personnalisée",
+      "description": "Accompagnement complet pour l'achat de biens prêts ou sur plan et location d'appartements de standing.",
+      "active": true
+    }
+  ],
+  "packages": [
+    {
+      "id": "pkg-1",
+      "title": "Pack Dubaï Découverte 7 Jours",
+      "duration": "7 Jours / 6 Nuits",
+      "price": "2,490 AED",
+      "badge": "Populaire",
+      "features": [
+        "Visa touristique 30 jours inclus",
+        "Hôtel 4 étoiles avec petit déjeuner",
+        "Safari désert avec dîner barbecue VIP",
+        "Transfert aéroport aller-retour"
+      ]
+    },
+    {
+      "id": "pkg-2",
+      "title": "Pack Séjour Affaires & Business",
+      "duration": "14 Jours",
+      "price": "4,200 AED",
+      "badge": "Recommandé",
+      "features": [
+        "Visa 60 jours à entrées multiples",
+        "Appartement meublé à Business Bay",
+        "Véhicule de catégorie confort inclus",
+        "Assistance conciergerie 24/7"
+      ]
+    }
+  ]
+}

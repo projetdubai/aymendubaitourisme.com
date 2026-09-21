@@ -1,0 +1,54 @@
+[
+  {
+    "id": "P-101",
+    "title": "Villa de Prestige Palm Jumeirah",
+    "location": "Palm Jumeirah",
+    "type": "Villa",
+    "category": "Vente",
+    "price": "15,000,000 AED",
+    "image": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
+    "bedrooms": 5,
+    "bathrooms": 6,
+    "area": "7,500 sqft",
+    "status": "Active"
+  },
+  {
+    "id": "P-102",
+    "title": "Appartement de Luxe Downtown",
+    "location": "Downtown Dubai",
+    "type": "Appartement",
+    "category": "Location",
+    "price": "120,000 AED/an",
+    "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
+    "bedrooms": 2,
+    "bathrooms": 2,
+    "area": "1,450 sqft",
+    "status": "Active"
+  },
+  {
+    "id": "P-103",
+    "title": "Penthouse Panoramique Dubai Marina",
+    "location": "Dubai Marina",
+    "type": "Penthouse",
+    "category": "Vente",
+    "price": "8,500,000 AED",
+    "image": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c0?q=80&w=800&auto=format&fit=crop",
+    "bedrooms": 4,
+    "bathrooms": 5,
+    "area": "4,200 sqft",
+    "status": "Active"
+  },
+  {
+    "id": "P-104",
+    "title": "Bureaux d'Affaires Business Bay",
+    "location": "Business Bay",
+    "type": "Bureau",
+    "category": "Location",
+    "price": "250,000 AED/an",
+    "image": "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=800&auto=format&fit=crop",
+    "bedrooms": 0,
+    "bathrooms": 2,
+    "area": "2,800 sqft",
+    "status": "Active"
+  }
+]

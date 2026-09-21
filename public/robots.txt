@@ -1,0 +1,11 @@
+# https://www.aymendubaitourisme.com robots.txt
+
+User-agent: *
+Allow: /
+
+# Block admin area from crawling
+Disallow: /*/admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://www.aymendubaitourisme.com/sitemap.xml

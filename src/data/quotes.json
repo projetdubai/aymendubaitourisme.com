@@ -1,0 +1,54 @@
+[
+  {
+    "id": "Q-1001",
+    "date": "2026-09-17",
+    "name": "Karim Mansouri",
+    "email": "karim.mansouri@gmail.com",
+    "phone": "+971 50 123 4567",
+    "service": "Visa Dubaï (2 Mois)",
+    "country": "Algérie",
+    "travelers": 2,
+    "travelDate": "2026-10-01",
+    "message": "Bonjour, nous souhaitons obtenir 2 visas touristiques de 60 jours pour Dubaï.",
+    "status": "NEW"
+  },
+  {
+    "id": "Q-1002",
+    "date": "2026-09-16",
+    "name": "Yacine Belkacem",
+    "email": "yacine.b@hotmail.com",
+    "phone": "+33 6 12 34 56 78",
+    "service": "Hôtel 5 Étoiles Downtown",
+    "country": "France",
+    "travelers": 2,
+    "travelDate": "2026-11-15",
+    "message": "Demande de devis pour 7 nuits à Downtown avec vue Burj Khalifa.",
+    "status": "READ"
+  },
+  {
+    "id": "Q-1003",
+    "date": "2026-09-15",
+    "name": "Amel Haddad",
+    "email": "amel.haddad@yahoo.fr",
+    "phone": "+213 555 12 34 56",
+    "service": "Location Villa Palm Jumeirah",
+    "country": "Algérie",
+    "travelers": 6,
+    "travelDate": "2026-12-20",
+    "message": "Recherche villa familiale pour les vacances de fin d'année.",
+    "status": "REPLIED"
+  },
+  {
+    "id": "Q-1004",
+    "date": "2026-09-14",
+    "name": "Sofiane Benali",
+    "email": "sofiane.b@gmail.com",
+    "phone": "+971 55 987 6543",
+    "service": "Billetterie Vol Emirates",
+    "country": "Maroc",
+    "travelers": 1,
+    "travelDate": "2026-09-28",
+    "message": "Vol direct Casablanca - Dubaï aller-retour en classe affaires.",
+    "status": "NEW"
+  }
+]
