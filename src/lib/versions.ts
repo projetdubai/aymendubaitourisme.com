@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { revalidatePath } from 'next/cache';
 import { cloudDb } from './cloud-db';
+import { revalidateSite } from './revalidate';
 
 export interface SiteVersion {
   id: string;
@@ -38,15 +38,29 @@ export function readVersions(): SiteVersion[] {
   }
 }
 
-export function writeVersions(versions: SiteVersion[]): boolean {
+export async function readVersionsAsync(): Promise<SiteVersion[]> {
+  try {
+    const cloudVersions = await cloudDb.get<SiteVersion[]>('versions');
+    if (Array.isArray(cloudVersions) && cloudVersions.length > 0) {
+      globalThis.__versions_cache = cloudVersions;
+      return cloudVersions;
+    }
+  } catch {}
+  return readVersions();
+}
+
+export async function writeVersionsAsync(versions: SiteVersion[]): Promise<boolean> {
+  globalThis.__versions_cache = versions;
   try {
     fs.writeFileSync(VERSIONS_FILE, JSON.stringify(versions, null, 2), 'utf8');
-    globalThis.__versions_cache = versions;
-    return true;
-  } catch (error) {
-    console.error('Error writing versions:', error);
-    return false;
-  }
+  } catch {}
+  await cloudDb.set('versions', versions);
+  return true;
+}
+
+export function writeVersions(versions: SiteVersion[]): boolean {
+  writeVersionsAsync(versions).catch(() => {});
+  return true;
 }
 
 function getNextVersion(currentVersions: SiteVersion[]): string {
@@ -54,7 +68,6 @@ function getNextVersion(currentVersions: SiteVersion[]): string {
     return 'v1.0.0';
   }
   
-  // Find the highest semantic version
   let highestMajor = 1;
   let highestMinor = 0;
   let highestPatch = 0;
@@ -76,37 +89,37 @@ function getNextVersion(currentVersions: SiteVersion[]): string {
     }
   }
 
-  // Increment patch version
   return `v${highestMajor}.${highestMinor}.${highestPatch + 1}`;
 }
 
-export function createVersionSnapshot(note: string, author?: string): SiteVersion {
-  const versions = readVersions();
+export async function createVersionSnapshotAsync(note: string, author?: string): Promise<SiteVersion> {
+  const versions = await readVersionsAsync();
   
-  // Mark all existing as inactive
   const updatedVersions = versions.map(v => ({ ...v, isActive: false }));
   
-  // Read current state
-  let siteContent = {};
-  try {
-    if (fs.existsSync(SITE_CONTENT_FILE)) {
-      siteContent = JSON.parse(fs.readFileSync(SITE_CONTENT_FILE, 'utf8'));
-    }
-  } catch (e) {
-    console.error('Error reading site content for snapshot:', e);
+  // Read current state from cloudDb
+  let siteContent = (await cloudDb.get('site_content')) || {};
+  if (Object.keys(siteContent).length === 0) {
+    try {
+      if (fs.existsSync(SITE_CONTENT_FILE)) {
+        siteContent = JSON.parse(fs.readFileSync(SITE_CONTENT_FILE, 'utf8'));
+      }
+    } catch {}
   }
 
   // Read messages for all locales
   const messages: Record<string, any> = {};
-  try {
-    ['fr', 'en', 'ar'].forEach(locale => {
-      const msgPath = path.join(process.cwd(), `src/messages/${locale}.json`);
-      if (fs.existsSync(msgPath)) {
-        messages[locale] = JSON.parse(fs.readFileSync(msgPath, 'utf8'));
-      }
-    });
-  } catch (e) {
-    console.error('Error reading messages for snapshot:', e);
+  for (const locale of ['fr', 'en', 'ar']) {
+    let locMsgs = await cloudDb.get(`messages_${locale}`);
+    if (!locMsgs) {
+      try {
+        const msgPath = path.join(process.cwd(), `src/messages/${locale}.json`);
+        if (fs.existsSync(msgPath)) {
+          locMsgs = JSON.parse(fs.readFileSync(msgPath, 'utf8'));
+        }
+      } catch {}
+    }
+    messages[locale] = locMsgs || {};
   }
 
   const nextVersionNum = getNextVersion(versions);
@@ -120,18 +133,33 @@ export function createVersionSnapshot(note: string, author?: string): SiteVersio
     snapshot: {
       siteContent,
       messages,
-      // You can add cars/properties count here if needed
     }
   };
 
-  updatedVersions.unshift(newVersion); // Add new version at the beginning
-  writeVersions(updatedVersions);
+  updatedVersions.unshift(newVersion);
+  await writeVersionsAsync(updatedVersions);
 
   return newVersion;
 }
 
-export function rollbackToVersion(versionId: string): { success: boolean; message: string; version?: SiteVersion } {
+export function createVersionSnapshot(note: string, author?: string): SiteVersion {
   const versions = readVersions();
+  const nextVersionNum = getNextVersion(versions);
+  const newVersion: SiteVersion = {
+    id: `ver_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+    version: nextVersionNum,
+    createdAt: new Date().toISOString(),
+    author: author || 'System',
+    note: note,
+    isActive: true,
+    snapshot: {}
+  };
+  createVersionSnapshotAsync(note, author).catch(() => {});
+  return newVersion;
+}
+
+export async function rollbackToVersion(versionId: string): Promise<{ success: boolean; message: string; version?: SiteVersion }> {
+  const versions = await readVersionsAsync();
   
   const targetVersionIndex = versions.findIndex(v => v.id === versionId);
   if (targetVersionIndex === -1) {
@@ -151,7 +179,7 @@ export function rollbackToVersion(versionId: string): { success: boolean; messag
       try {
         fs.writeFileSync(SITE_CONTENT_FILE, JSON.stringify(snapshot.siteContent, null, 2), 'utf8');
       } catch {}
-      cloudDb.set('site_content', snapshot.siteContent).catch(() => {});
+      await cloudDb.set('site_content', snapshot.siteContent);
     }
 
     // Restore messages
@@ -161,19 +189,12 @@ export function rollbackToVersion(versionId: string): { success: boolean; messag
           const msgPath = path.join(process.cwd(), `src/messages/${locale}.json`);
           fs.writeFileSync(msgPath, JSON.stringify(content, null, 2), 'utf8');
         } catch {}
-        cloudDb.set(`messages_${locale}`, content).catch(() => {});
+        await cloudDb.set(`messages_${locale}`, content);
       }
     }
 
-    // Invalidate all caches and revalidate paths
-    cloudDb.invalidate();
-    try {
-      revalidatePath('/', 'layout');
-      for (const loc of ['fr', 'ar', 'en']) {
-        revalidatePath(`/${loc}`, 'layout');
-        revalidatePath(`/${loc}`, 'page');
-      }
-    } catch {}
+    // Invalidate all caches and revalidate paths in < 1 second
+    await revalidateSite();
 
     // Update versions state
     const updatedVersions = versions.map(v => ({
@@ -181,7 +202,7 @@ export function rollbackToVersion(versionId: string): { success: boolean; messag
       isActive: v.id === versionId
     }));
     
-    writeVersions(updatedVersions);
+    await writeVersionsAsync(updatedVersions);
     
     return { success: true, message: `Restauré à la version ${targetVersion.version}`, version: targetVersion };
   } catch (error) {
@@ -189,4 +210,3 @@ export function rollbackToVersion(versionId: string): { success: boolean; messag
     return { success: false, message: 'Erreur lors de la restauration' };
   }
 }
-

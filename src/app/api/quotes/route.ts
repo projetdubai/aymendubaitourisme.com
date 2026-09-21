@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-// import { prisma } from "@/lib/prisma";
 import { z } from "zod";
+import { prisma } from "@/lib/prisma";
+import { cloudDb } from "@/lib/cloud-db";
+import fs from "fs";
+import path from "path";
+import os from "os";
+
+export const dynamic = 'force-dynamic';
 
 const quoteSchema = z.object({
   fullName: z.string().min(2),
@@ -21,27 +27,78 @@ const quoteSchema = z.object({
   locale: z.string().optional(),
 });
 
+const PRIMARY_FILE = path.join(process.cwd(), "src", "data", "quotes.json");
+const TMP_FILE = path.join(os.tmpdir(), "aymen_quotes.json");
+
+function getInitialQuotes(): any[] {
+  try {
+    if (fs.existsSync(PRIMARY_FILE)) {
+      return JSON.parse(fs.readFileSync(PRIMARY_FILE, "utf-8")) || [];
+    }
+  } catch {}
+  try {
+    if (fs.existsSync(TMP_FILE)) {
+      return JSON.parse(fs.readFileSync(TMP_FILE, "utf-8")) || [];
+    }
+  } catch {}
+  return [];
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const validated = quoteSchema.parse(body);
 
-    // When database is connected, uncomment:
-    // const quote = await prisma.quoteRequest.create({
-    //   data: {
-    //     ...validated,
-    //     locale: validated.locale || "en",
-    //   },
-    // });
+    const newQuote = {
+      id: `QT-${Date.now()}-${Math.floor(100 + Math.random() * 900)}`,
+      ...validated,
+      status: "NEW",
+      createdAt: new Date().toISOString(),
+    };
 
-    // For now, log the request
-    console.log("New quote request:", validated);
+    // 1. Try PostgreSQL via Prisma if DATABASE_URL is set
+    if (process.env.DATABASE_URL) {
+      try {
+        await prisma.quoteRequest.create({
+          data: {
+            service: validated.service,
+            subService: validated.subService || null,
+            fullName: validated.fullName,
+            country: validated.country,
+            phone: validated.phone,
+            email: validated.email,
+            propertyType: validated.propertyType || null,
+            propertyCategory: validated.propertyCategory || null,
+            dubaiArea: validated.dubaiArea || null,
+            budget: validated.budget || null,
+            bedrooms: validated.bedrooms || null,
+            rentalDuration: validated.rentalDuration || null,
+            travelDate: validated.travelDate || null,
+            travelers: validated.travelers || null,
+            message: validated.message || null,
+            locale: validated.locale || "en",
+          },
+        });
+      } catch (prismaErr) {
+        console.warn("[quotes] Prisma save notice:", prismaErr);
+      }
+    }
+
+    // 2. Persist in cloudDb
+    const currentQuotes = (await cloudDb.get<any[]>("quotes")) || getInitialQuotes();
+    const updatedQuotes = [newQuote, ...(Array.isArray(currentQuotes) ? currentQuotes : [])];
+    await cloudDb.set("quotes", updatedQuotes);
+
+    // 3. Backup to local disk / tmp
+    try {
+      fs.writeFileSync(TMP_FILE, JSON.stringify(updatedQuotes, null, 2), "utf-8");
+    } catch {}
 
     return NextResponse.json(
       {
         success: true,
         message: "Quote request submitted successfully",
-        // id: quote.id,
+        id: newQuote.id,
       },
       { status: 201 }
     );

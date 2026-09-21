@@ -368,7 +368,7 @@ export async function readServicesAsync(): Promise<TourismServiceItem[]> {
   return readServices();
 }
 
-export function writeServices(services: TourismServiceItem[]): boolean {
+export async function writeServicesAsync(services: TourismServiceItem[]): Promise<boolean> {
   globalThis.__services_cache = [...services];
 
   // Primary file
@@ -389,11 +389,16 @@ export function writeServices(services: TourismServiceItem[]): boolean {
     console.warn('Could not write to tmp services file:', err);
   }
 
-  // Async save to Cloud DB
-  cloudDb.set('services', services).catch((err) => {
-    console.warn('Error saving services to cloudDb:', err);
-  });
+  // Await save to Cloud DB
+  await cloudDb.set('services', services);
   cloudDb.invalidate('services');
 
+  return true;
+}
+
+export function writeServices(services: TourismServiceItem[]): boolean {
+  writeServicesAsync(services).catch((err) => {
+    console.warn('Error saving services to cloudDb in background:', err);
+  });
   return true;
 }

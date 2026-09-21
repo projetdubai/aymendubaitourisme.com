@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import { 
   readAllReviewsAsync,
   addCustomerReviewAsync 
 } from '@/lib/reviews';
+import { revalidateSite } from '@/lib/revalidate';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -108,12 +108,8 @@ export async function POST(request: NextRequest) {
       country,
     });
 
-    // Invalidate Next.js cache so admin and pages see the submission
-    try {
-      revalidatePath('/', 'layout');
-    } catch (e) {
-      console.warn('revalidatePath error:', e);
-    }
+    // Invalidate Next.js cache and cloudDb so admin and pages see the submission immediately
+    await revalidateSite('reviews');
 
     return NextResponse.json(
       {

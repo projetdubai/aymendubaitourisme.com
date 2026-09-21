@@ -148,3 +148,10 @@ model Service {
   @@index([active])
   @@index([order])
 }
+
+model SiteSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @default(now()) @updatedAt
+}
+

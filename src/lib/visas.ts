@@ -457,7 +457,7 @@ export async function readVisasAsync(): Promise<VisaItem[]> {
   return readVisas();
 }
 
-export function writeVisas(visas: VisaItem[]): boolean {
+export async function writeVisasAsync(visas: VisaItem[]): Promise<boolean> {
   globalThis.__visas_cache = [...visas];
 
   // Try writing to primary file
@@ -478,11 +478,16 @@ export function writeVisas(visas: VisaItem[]): boolean {
     console.warn('Could not write to tmp visas file:', err);
   }
 
-  // Async save to Cloud DB
-  cloudDb.set('visas', visas).catch((err) => {
-    console.warn('Error saving visas to cloudDb:', err);
-  });
+  // Await save to Cloud DB
+  await cloudDb.set('visas', visas);
   cloudDb.invalidate('visas');
 
+  return true;
+}
+
+export function writeVisas(visas: VisaItem[]): boolean {
+  writeVisasAsync(visas).catch((err) => {
+    console.warn('Error saving visas to cloudDb in background:', err);
+  });
   return true;
 }

@@ -2,25 +2,44 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { hashPassword } from "@/lib/auth";
+import { cloudDb } from "@/lib/cloud-db";
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 const ADMINS_FILE = path.join(process.cwd(), "src", "data", "admins.json");
 
-function readAdmins() {
+function readAdminsDisk() {
   try {
-    const data = fs.readFileSync(ADMINS_FILE, "utf-8");
-    return JSON.parse(data);
+    if (fs.existsSync(ADMINS_FILE)) {
+      const data = fs.readFileSync(ADMINS_FILE, "utf-8");
+      return JSON.parse(data);
+    }
   } catch {
-    return [];
+    // ignore
   }
+  return [];
 }
 
-function writeAdmins(admins: any[]) {
-  fs.writeFileSync(ADMINS_FILE, JSON.stringify(admins, null, 2), "utf-8");
+async function getAdmins(): Promise<any[]> {
+  const disk = readAdminsDisk();
+  const cloud = await cloudDb.get<any[]>("admins", disk);
+  if (Array.isArray(cloud) && cloud.length > 0) {
+    return cloud;
+  }
+  return disk;
+}
+
+async function saveAdmins(admins: any[]): Promise<void> {
+  await cloudDb.set("admins", admins);
+  try {
+    fs.writeFileSync(ADMINS_FILE, JSON.stringify(admins, null, 2), "utf-8");
+  } catch {}
 }
 
 export async function GET() {
   try {
-    const admins = readAdmins();
+    const admins = await getAdmins();
     const safeAdmins = admins.map(({ password, passwordHash, ...rest }: any) => rest);
     return NextResponse.json({ success: true, admins: safeAdmins });
   } catch (error) {
@@ -44,7 +63,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const admins = readAdmins();
+    const admins = await getAdmins();
     const exists = admins.some(
       (a: any) => a.email.toLowerCase() === email.trim().toLowerCase()
     );
@@ -67,8 +86,8 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString().split("T")[0],
     };
 
-    admins.push(newAdmin);
-    writeAdmins(admins);
+    const updatedAdmins = [...admins, newAdmin];
+    await saveAdmins(updatedAdmins);
 
     const { passwordHash: _, ...safeAdmin } = newAdmin as any;
     return NextResponse.json(
@@ -96,7 +115,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const admins = readAdmins();
+    const admins = await getAdmins();
     if (admins.length <= 1) {
       return NextResponse.json(
         { success: false, message: "Impossible de supprimer le dernier administrateur." },
@@ -112,7 +131,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    writeAdmins(filtered);
+    await saveAdmins(filtered);
     return NextResponse.json({
       success: true,
       message: "Administrateur supprimé avec succès.",

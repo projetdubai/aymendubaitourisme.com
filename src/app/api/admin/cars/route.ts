@@ -1,22 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
-import { CarItem, readCarsAsync, writeCars, DEFAULT_CARS } from "@/lib/cars";
+import { CarItem, readCarsAsync, writeCarsAsync, DEFAULT_CARS } from "@/lib/cars";
+import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-
-function revalidateCarsPaths() {
-  try {
-    revalidatePath("/", "layout");
-    for (const loc of ["fr", "ar", "en"]) {
-      revalidatePath(`/${loc}`, "layout");
-      revalidatePath(`/${loc}`, "page");
-      revalidatePath(`/${loc}/cars`, "page");
-    }
-  } catch (e) {
-    console.warn("revalidateCarsPaths error:", e);
-  }
-}
 
 export async function GET() {
   try {
@@ -67,8 +54,8 @@ export async function POST(req: NextRequest) {
     };
 
     const updated = [newCar, ...currentCars.filter((c) => c.id !== newCar.id)];
-    writeCars(updated);
-    revalidateCarsPaths();
+    await writeCarsAsync(updated);
+    await revalidateSite('cars');
 
     return NextResponse.json({ success: true, car: newCar });
   } catch (error: any) {
@@ -127,8 +114,8 @@ export async function PUT(req: NextRequest) {
       updatedList = [updatedCar, ...currentCars];
     }
 
-    writeCars(updatedList);
-    revalidateCarsPaths();
+    await writeCarsAsync(updatedList);
+    await revalidateSite('cars');
 
     return NextResponse.json({ success: true, car: updatedCar });
   } catch (error: any) {
@@ -150,8 +137,8 @@ export async function DELETE(req: NextRequest) {
 
     const currentCars = await readCarsAsync();
     const updated = currentCars.filter((c) => c.id !== id);
-    writeCars(updated);
-    revalidateCarsPaths();
+    await writeCarsAsync(updated);
+    await revalidateSite('cars');
 
     return NextResponse.json({ success: true, deletedId: id });
   } catch (error: any) {

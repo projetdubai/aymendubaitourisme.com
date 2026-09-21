@@ -209,7 +209,7 @@ export async function readCarsAsync(): Promise<CarItem[]> {
   return readCars();
 }
 
-export function writeCars(cars: CarItem[]): boolean {
+export async function writeCarsAsync(cars: CarItem[]): Promise<boolean> {
   globalThis.__cars_cache = [...cars];
 
   // Try writing to primary file
@@ -230,12 +230,17 @@ export function writeCars(cars: CarItem[]): boolean {
     console.warn("Could not write to tmp cars file:", err);
   }
 
-  // Async save to Cloud DB
-  cloudDb.set("cars", cars).catch((err) => {
-    console.warn("Error saving cars to cloudDb:", err);
-  });
+  // Await save to Cloud DB
+  await cloudDb.set("cars", cars);
   cloudDb.invalidate("cars");
 
+  return true;
+}
+
+export function writeCars(cars: CarItem[]): boolean {
+  writeCarsAsync(cars).catch((err) => {
+    console.warn("Error saving cars to cloudDb in background:", err);
+  });
   return true;
 }
 

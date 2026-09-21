@@ -331,7 +331,7 @@ export async function readFlightsAsync(): Promise<FlightItem[]> {
   return readFlights();
 }
 
-export function writeFlights(flights: FlightItem[]): boolean {
+export async function writeFlightsAsync(flights: FlightItem[]): Promise<boolean> {
   globalThis.__flights_cache = [...flights];
 
   // Primary file
@@ -352,11 +352,16 @@ export function writeFlights(flights: FlightItem[]): boolean {
     console.warn('Could not write to tmp flights file:', err);
   }
 
-  // Async save to Cloud DB
-  cloudDb.set('flights', flights).catch((err) => {
-    console.warn('Error saving flights to cloudDb:', err);
-  });
+  // Await save to Cloud DB
+  await cloudDb.set('flights', flights);
   cloudDb.invalidate('flights');
 
+  return true;
+}
+
+export function writeFlights(flights: FlightItem[]): boolean {
+  writeFlightsAsync(flights).catch((err) => {
+    console.warn('Error saving flights to cloudDb in background:', err);
+  });
   return true;
 }

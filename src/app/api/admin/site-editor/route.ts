@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 import fs from "fs";
 import path from "path";
 import os from "os";
 import { cloudDb } from "@/lib/cloud-db";
+import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 
@@ -102,21 +102,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Invalidate caches so visitors and serverless instances immediately see the updated content
-    try {
-      cloudDb.invalidate();
-      revalidatePath("/", "layout");
-      for (const loc of ["fr", "ar", "en"]) {
-        revalidatePath(`/${loc}`, "layout");
-        revalidatePath(`/${loc}`, "page");
-        revalidatePath(`/${loc}/cars`, "page");
-        revalidatePath(`/${loc}/services`, "page");
-        revalidatePath(`/${loc}/reviews`, "page");
-        revalidatePath(`/${loc}/real-estate`, "page");
-        revalidatePath(`/${loc}/contact`, "page");
-      }
-    } catch (e) {
-      console.warn("revalidatePath error:", e);
-    }
+    await revalidateSite();
 
     return NextResponse.json({
       success: true,

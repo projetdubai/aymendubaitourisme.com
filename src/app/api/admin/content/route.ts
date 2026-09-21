@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 import fs from "fs";
 import path from "path";
 import os from "os";
 import { cloudDb } from "@/lib/cloud-db";
+import { revalidateSite } from "@/lib/revalidate";
 
 declare global {
   var __site_content_cache: any | undefined;
@@ -91,15 +91,7 @@ export async function POST(request: NextRequest) {
 
     writeContent(updated);
     await cloudDb.set("site_content", updated);
-    cloudDb.invalidate("site_content");
-
-    try {
-      revalidatePath("/", "layout");
-      for (const loc of ["fr", "ar", "en"]) {
-        revalidatePath(`/${loc}`, "layout");
-        revalidatePath(`/${loc}`, "page");
-      }
-    } catch {}
+    await revalidateSite('site_content');
 
     return NextResponse.json({
       success: true,

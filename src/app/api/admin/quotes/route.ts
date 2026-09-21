@@ -2,6 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import os from "os";
+import { cloudDb } from "@/lib/cloud-db";
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 declare global {
   var __quotes_cache: any[] | undefined;
@@ -10,63 +14,59 @@ declare global {
 const PRIMARY_FILE = path.join(process.cwd(), "src", "data", "quotes.json");
 const TMP_FILE = path.join(os.tmpdir(), "aymen_quotes.json");
 
-function readQuotes(): any[] {
-  if (globalThis.__quotes_cache && globalThis.__quotes_cache.length > 0) {
-    return globalThis.__quotes_cache;
-  }
-
+function readDiskQuotes(): any[] {
   try {
     if (fs.existsSync(PRIMARY_FILE)) {
       const data = fs.readFileSync(PRIMARY_FILE, "utf-8");
       const parsed = JSON.parse(data);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        globalThis.__quotes_cache = parsed;
         return parsed;
       }
     }
-  } catch (err) {
-    console.warn("Could not read primary quotes file:", err);
-  }
+  } catch (err) {}
 
   try {
     if (fs.existsSync(TMP_FILE)) {
       const data = fs.readFileSync(TMP_FILE, "utf-8");
       const parsed = JSON.parse(data);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        globalThis.__quotes_cache = parsed;
         return parsed;
       }
     }
-  } catch (err) {
-    console.warn("Could not read tmp quotes file:", err);
-  }
+  } catch (err) {}
 
   return [];
 }
 
-function writeQuotes(quotes: any[]) {
+async function getQuotes(): Promise<any[]> {
+  const disk = readDiskQuotes();
+  const cloud = await cloudDb.get<any[]>("quotes", disk);
+  if (Array.isArray(cloud) && cloud.length > 0) {
+    globalThis.__quotes_cache = cloud;
+    return cloud;
+  }
+  globalThis.__quotes_cache = disk;
+  return disk;
+}
+
+async function saveQuotes(quotes: any[]): Promise<void> {
   globalThis.__quotes_cache = quotes;
+  await cloudDb.set("quotes", quotes);
 
   try {
     const dir = path.dirname(PRIMARY_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(PRIMARY_FILE, JSON.stringify(quotes, null, 2), "utf-8");
-  } catch (err) {
-    console.warn("Primary quotes file write failed:", err);
-  }
+  } catch {}
 
   try {
     fs.writeFileSync(TMP_FILE, JSON.stringify(quotes, null, 2), "utf-8");
-  } catch (err) {
-    console.warn("Tmp quotes file write failed:", err);
-  }
+  } catch {}
 }
 
 export async function GET() {
   try {
-    const quotes = readQuotes();
+    const quotes = await getQuotes();
     return NextResponse.json({ success: true, quotes });
   } catch (error) {
     console.error("Error reading quotes:", error);
@@ -82,7 +82,7 @@ export async function PATCH(request: NextRequest) {
     const body = await request.json();
     const { id, status } = body;
 
-    const quotes = readQuotes();
+    const quotes = await getQuotes();
     const index = quotes.findIndex((q: any) => q.id === id);
 
     if (index === -1) {
@@ -93,7 +93,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     quotes[index].status = status;
-    writeQuotes(quotes);
+    await saveQuotes(quotes);
 
     return NextResponse.json({
       success: true,
@@ -121,9 +121,9 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const quotes = readQuotes();
+    const quotes = await getQuotes();
     const filtered = quotes.filter((q: any) => q.id !== id);
-    writeQuotes(filtered);
+    await saveQuotes(filtered);
 
     return NextResponse.json({
       success: true,

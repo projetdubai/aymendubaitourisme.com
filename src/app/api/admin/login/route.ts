@@ -2,13 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import { comparePassword, generateToken } from "@/lib/auth";
+import { cloudDb } from "@/lib/cloud-db";
 
 const ADMINS_FILE = path.join(process.cwd(), "src", "data", "admins.json");
 
 function readAdmins() {
   try {
-    const data = fs.readFileSync(ADMINS_FILE, "utf-8");
-    return JSON.parse(data);
+    if (fs.existsSync(ADMINS_FILE)) {
+      const data = fs.readFileSync(ADMINS_FILE, "utf-8");
+      return JSON.parse(data);
+    }
   } catch {
     return [];
   }
@@ -26,7 +29,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const admins = readAdmins();
+    const diskAdmins = readAdmins();
+    const cloudAdmins = await cloudDb.get<any[]>("admins", diskAdmins);
+    const admins = Array.isArray(cloudAdmins) && cloudAdmins.length > 0 ? cloudAdmins : diskAdmins;
+
     const admin = admins.find(
       (a: any) =>
         a.email.toLowerCase() === email.trim().toLowerCase()

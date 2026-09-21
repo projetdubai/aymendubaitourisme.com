@@ -1,23 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
-import { FlightItem, readFlightsAsync, writeFlights, DEFAULT_FLIGHTS } from "@/lib/flights";
+import { FlightItem, readFlightsAsync, writeFlightsAsync, DEFAULT_FLIGHTS } from "@/lib/flights";
+import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-
-function revalidateFlightPaths() {
-  try {
-    revalidatePath("/", "layout");
-    for (const loc of ["fr", "ar", "en"]) {
-      revalidatePath(`/${loc}`, "layout");
-      revalidatePath(`/${loc}`, "page");
-      revalidatePath(`/${loc}/flights`, "page");
-      revalidatePath(`/${loc}/quote`, "page");
-    }
-  } catch (e) {
-    console.warn("revalidateFlightPaths error:", e);
-  }
-}
 
 export async function GET() {
   try {
@@ -72,8 +58,8 @@ export async function POST(req: NextRequest) {
     };
 
     const updated = [newFlight, ...currentFlights.filter((f) => f.id !== newFlight.id)];
-    writeFlights(updated);
-    revalidateFlightPaths();
+    await writeFlightsAsync(updated);
+    await revalidateSite('flights');
 
     return NextResponse.json({ success: true, flight: newFlight, flights: updated });
   } catch (error: any) {
@@ -126,8 +112,8 @@ export async function PUT(req: NextRequest) {
     const updated = [...currentFlights];
     updated[index] = updatedFlight;
 
-    writeFlights(updated);
-    revalidateFlightPaths();
+    await writeFlightsAsync(updated);
+    await revalidateSite('flights');
 
     return NextResponse.json({ success: true, flight: updatedFlight, flights: updated });
   } catch (error: any) {
@@ -154,8 +140,8 @@ export async function DELETE(req: NextRequest) {
     const currentFlights = await readFlightsAsync();
     const updated = currentFlights.filter((f) => f.id !== id);
 
-    writeFlights(updated);
-    revalidateFlightPaths();
+    await writeFlightsAsync(updated);
+    await revalidateSite('flights');
 
     return NextResponse.json({ success: true, flights: updated });
   } catch (error: any) {

@@ -1,23 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
-import { TourismServiceItem, readServicesAsync, writeServices, DEFAULT_SERVICES } from "@/lib/services";
+import { TourismServiceItem, readServicesAsync, writeServicesAsync, DEFAULT_SERVICES } from "@/lib/services";
+import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-
-function revalidateServicesPaths() {
-  try {
-    revalidatePath("/", "layout");
-    for (const loc of ["fr", "ar", "en"]) {
-      revalidatePath(`/${loc}`, "layout");
-      revalidatePath(`/${loc}`, "page");
-      revalidatePath(`/${loc}/services`, "page");
-      revalidatePath(`/${loc}/quote`, "page");
-    }
-  } catch (e) {
-    console.warn("revalidateServicesPaths error:", e);
-  }
-}
 
 export async function GET() {
   try {
@@ -59,9 +45,9 @@ export async function POST(req: NextRequest) {
       image: body.image || "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop",
       priceStartingFrom: body.priceStartingFrom || "",
       badge: {
-        fr: body.badge?.fr || body.badge || "Exclusif",
-        ar: body.badge?.ar || body.badge_ar || "حصري",
-        en: body.badge?.en || body.badge_en || "Exclusive",
+        fr: body.badge?.fr || body.badge || "Disponible",
+        ar: body.badge?.ar || body.badge_ar || "متاح",
+        en: body.badge?.en || body.badge_en || "Available",
       },
       features: {
         fr: Array.isArray(body.features?.fr) ? body.features.fr : ["Prestation haut de gamme", "Accompagnement VIP"],
@@ -74,8 +60,8 @@ export async function POST(req: NextRequest) {
     };
 
     const updated = [newService, ...currentServices.filter((s) => s.id !== newService.id)];
-    writeServices(updated);
-    revalidateServicesPaths();
+    await writeServicesAsync(updated);
+    await revalidateSite('services');
 
     return NextResponse.json({ success: true, service: newService, services: updated });
   } catch (error: any) {
@@ -133,8 +119,8 @@ export async function PUT(req: NextRequest) {
     const updated = [...currentServices];
     updated[index] = updatedService;
 
-    writeServices(updated);
-    revalidateServicesPaths();
+    await writeServicesAsync(updated);
+    await revalidateSite('services');
 
     return NextResponse.json({ success: true, service: updatedService, services: updated });
   } catch (error: any) {
@@ -161,8 +147,8 @@ export async function DELETE(req: NextRequest) {
     const currentServices = await readServicesAsync();
     const updated = currentServices.filter((s) => s.id !== id);
 
-    writeServices(updated);
-    revalidateServicesPaths();
+    await writeServicesAsync(updated);
+    await revalidateSite('services');
 
     return NextResponse.json({ success: true, services: updated });
   } catch (error: any) {

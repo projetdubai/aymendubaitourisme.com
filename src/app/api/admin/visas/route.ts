@@ -1,23 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
-import { VisaItem, readVisasAsync, writeVisas, DEFAULT_VISAS } from "@/lib/visas";
+import { VisaItem, readVisasAsync, writeVisasAsync, DEFAULT_VISAS } from "@/lib/visas";
+import { revalidateSite } from "@/lib/revalidate";
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-function revalidateVisaPaths() {
-  try {
-    revalidatePath("/", "layout");
-    for (const loc of ["fr", "ar", "en"]) {
-      revalidatePath(`/${loc}`, "layout");
-      revalidatePath(`/${loc}`, "page");
-      revalidatePath(`/${loc}/visa`, "page");
-      revalidatePath(`/${loc}/quote`, "page");
-    }
-  } catch (e) {
-    console.warn("revalidateVisaPaths error:", e);
-  }
-}
 
 export async function GET() {
   try {
@@ -75,8 +62,8 @@ export async function POST(req: NextRequest) {
     };
 
     const updated = [newVisa, ...currentVisas.filter((v) => v.id !== newVisa.id)];
-    writeVisas(updated);
-    revalidateVisaPaths();
+    await writeVisasAsync(updated);
+    await revalidateSite('visas');
 
     return NextResponse.json({ success: true, visa: newVisa, visas: updated });
   } catch (error: any) {
@@ -134,8 +121,8 @@ export async function PUT(req: NextRequest) {
     const updated = [...currentVisas];
     updated[index] = updatedVisa;
 
-    writeVisas(updated);
-    revalidateVisaPaths();
+    await writeVisasAsync(updated);
+    await revalidateSite('visas');
 
     return NextResponse.json({ success: true, visa: updatedVisa, visas: updated });
   } catch (error: any) {
@@ -162,8 +149,8 @@ export async function DELETE(req: NextRequest) {
     const currentVisas = await readVisasAsync();
     const updated = currentVisas.filter((v) => v.id !== id);
 
-    writeVisas(updated);
-    revalidateVisaPaths();
+    await writeVisasAsync(updated);
+    await revalidateSite('visas');
 
     return NextResponse.json({ success: true, visas: updated });
   } catch (error: any) {

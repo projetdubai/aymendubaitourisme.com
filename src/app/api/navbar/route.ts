@@ -1,7 +1,8 @@
-﻿import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { cloudDb } from '@/lib/cloud-db';
+import { revalidateSite } from '@/lib/revalidate';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -52,5 +53,41 @@ export async function GET() {
       success: true,
       navbar: DEFAULT_NAVBAR,
     });
+  }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { navbar } = body;
+
+    if (!Array.isArray(navbar)) {
+      return NextResponse.json(
+        { success: false, message: 'Structure de navbar invalide.' },
+        { status: 400 }
+      );
+    }
+
+    const currentContent = (await cloudDb.get('site_content')) || {};
+    const updatedContent = {
+      ...currentContent,
+      navbar,
+      updatedAt: new Date().toISOString(),
+    };
+
+    await cloudDb.set('site_content', updatedContent);
+    await revalidateSite('navbar');
+
+    return NextResponse.json({
+      success: true,
+      message: 'Barre de navigation mise à jour avec succès.',
+      navbar,
+    });
+  } catch (error: any) {
+    console.error('Error saving navbar:', error);
+    return NextResponse.json(
+      { success: false, message: error?.message || 'Erreur lors de la mise à jour.' },
+      { status: 500 }
+    );
   }
 }

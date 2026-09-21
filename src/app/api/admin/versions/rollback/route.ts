@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { rollbackToVersion } from '@/lib/versions';
-import { revalidatePath } from 'next/cache';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function POST(request: Request) {
   try {
@@ -14,10 +16,9 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = rollbackToVersion(versionId);
+    const result = await rollbackToVersion(versionId);
     
     if (result.success) {
-      revalidatePath('/', 'layout');
       return NextResponse.json({ 
         success: true, 
         message: 'Version restaurée avec succès',
